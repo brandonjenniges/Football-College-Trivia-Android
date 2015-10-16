@@ -2,6 +2,13 @@
 
 A football trivia game where the goal is to guess which college current NFL players attended.
 
+Download
+--------------
+
+<a href="https://play.google.com/store/apps/details?id=com.college.football.trivia">
+<img align="middle" alt="Get it on Google Play" src="http://steverichey.github.io/google-play-badge-svg/img/en_get.svg" />
+</a>
+
 Pre-requisites
 --------------
 
