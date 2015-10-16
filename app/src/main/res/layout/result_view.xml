@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light.background">
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/app_bar" />
+
+        <ImageView
+            android:layout_below="@id/app_bar"
+            android:id="@+id/header"
+            android:src="@mipmap/header"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:contentDescription="TODO" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/result_score"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Score: 0"
+                    android:textSize="@dimen/abc_text_size_display_1_material"
+                    android:textColor="@color/dark.text.color" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="3">
+
+                <Button
+                    android:id="@+id/playAgainButton"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:text="Play Again"
+                    android:textSize="@dimen/abc_text_size_medium_material"
+                    android:textColor="@color/dark.text.color"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="primaryColor">#f44336</color>
+    <color name="primaryColorDark">#d32f2f</color>
+    <color name="accentColor">#50514F</color>
+
+    <color name="light.background">#FFFFFF</color>
+    <color name="dark.red">#97310F</color>
+    <color name="dark.background">#2E2E2E</color>
+    <color name="dark.text.color">#222222</color>
+    <color name="question.text.color">#FFF</color>
+
+    <color name="correct.guess.color">#259B24</color>
+    <color name="incorrect.guess.color">#FF0000</color>
+</resources>

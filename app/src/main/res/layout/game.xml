@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light.background"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/primaryColor"
+        android:elevation="1dp">
+
+        <TextView
+            android:id="@+id/playerText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/player_name"
+            android:textColor="@color/question.text.color"
+            android:textSize="@dimen/abc_text_size_large_material" />
+
+        <View
+            android:id="@+id/top_seperator"
+            android:layout_width="fill_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/playerText"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/question.text.color"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/teamText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_seperator"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="@string/pro_team"
+            android:textColor="@color/question.text.color"
+            android:textSize="@dimen/abc_text_size_large_material" />
+
+        <LinearLayout
+            android:id="@+id/score_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/teamText"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/bestScoreSection"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/bestScoreLabel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Best"
+                    android:textColor="@color/question.text.color"
+                    android:textSize="@dimen/abc_text_size_small_material" />
+
+
+                <TextView
+                    android:id="@+id/highScoreText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/high_score"
+                    android:textColor="@color/question.text.color"
+                    android:textSize="@dimen/abc_text_size_medium_material" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/gameValueSection"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/gameValueText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/game_text"
+                    android:textColor="@color/question.text.color"
+                    android:textSize="@dimen/abc_text_size_large_material" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/currentScoreSection"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/currentScoreLabel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Current"
+                    android:textColor="@color/question.text.color"
+                    android:textSize="@dimen/abc_text_size_small_material" />
+
+                <TextView
+                    android:id="@+id/currentScoreText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/game_score"
+                    android:textColor="@color/question.text.color"
+                    android:textSize="@dimen/abc_text_size_medium_material" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:background="@color/question.text.color"
+        android:padding="8dp" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/choice1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="@dimen/abc_text_size_large_material"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:gravity="center"
+                android:text="@string/college"
+                android:textColor="@color/dark.text.color"
+                android:textSize="@dimen/abc_text_size_large_material" />
+
+            <Button
+                android:id="@+id/choice2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="@dimen/abc_text_size_large_material"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:gravity="center"
+                android:text="@string/college"
+                android:textColor="@color/dark.text.color"
+                android:textSize="@dimen/abc_text_size_large_material" />
+
+            <Button
+                android:id="@+id/choice3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="@dimen/abc_text_size_large_material"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:gravity="center"
+                android:text="@string/college"
+                android:textColor="@color/dark.text.color"
+                android:textSize="@dimen/abc_text_size_large_material" />
+
+            <Button
+                android:id="@+id/choice4"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="@dimen/abc_text_size_large_material"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:gravity="center"
+                android:text="@string/college"
+                android:textColor="@color/dark.text.color"
+                android:textSize="@dimen/abc_text_size_large_material"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="3dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="#00000000"
+                android:padding="8dp" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+
+</LinearLayout>

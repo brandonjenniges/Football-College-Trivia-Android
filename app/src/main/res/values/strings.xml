@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Football College Trivia</string>
+    <string name="title_activity_title_screen">TitleScreen</string>
+    <string name="action_rate">Rate</string>
+    <string name="action_about">About</string>
+
+
+    <!-- Game Modes -->
+    <string name="standard_game">Standard</string>
+    <string name="survival_game">Survival</string>
+    <string name="practice_game">Practice</string>
+
+    <!-- Game Diffs -->
+    <string name="rookie_game">Rookie</string>
+    <string name="starter_game">Starter</string>
+    <string name="veteran_game">Veteran</string>
+    <string name="all_pro_game">All-Pro</string>
+
+    <!-- Game Screen -->
+    <string name="player_name">MICHAEL HOOMANAWANUI #47 TE</string>
+    <string name="pro_team">Team</string>
+    <string name="college">College</string>
+    <string name="high_score">0</string>
+    <string name="game_text">2:00</string>
+    <string name="game_score">0</string>
+    <string name="guess_result">Go!</string>
+    <string name="action_achievements">Achievements</string>
+    <string name="action_leaderboard">Leaderboard</string>
+
+</resources>

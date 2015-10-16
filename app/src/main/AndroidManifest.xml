@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.college.football.trivia">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".FootballTriviaApplication"
+        tools:replace="android:icon"
+        android:allowBackup="true"
+        android:icon="@mipmap/icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+        <!-- Used for Google Analytics -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".TitleScreenActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".game.PracticeActivity"
+            android:label=" "
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".game.StandardActivity"
+            android:label=" "
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".game.SurvivalActivity"
+            android:label=" "
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".ResultsActivity"
+            android:label=" "
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".LeaderboardActivity"
+            android:label=" "
+            android:screenOrientation="nosensor"/>
+    </application>
+
+</manifest>

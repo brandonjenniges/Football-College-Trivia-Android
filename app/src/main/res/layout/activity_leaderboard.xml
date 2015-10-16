@@ -1,0 +1,110 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/light.background"
+    tools:context="com.college.football.trivia.LeaderboardActivity">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+
+    <ImageView
+        android:layout_below="@id/app_bar"
+        android:id="@+id/header"
+        android:src="@mipmap/header"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:contentDescription="TODO" />
+
+    <View
+        android:id="@+id/centerShim"
+        android:layout_width="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/header"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
+
+    <!-- Standard -->
+    <RelativeLayout
+        android:id="@+id/standard_scores_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/centerShim">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/LeaderboardActivity.TextView"
+                android:gravity="center"
+                android:text="@string/standard_game" />
+
+            <Button
+                style="@style/LeaderboardActivity.Button"
+                android:text="@string/rookie_game"
+                android:tag="0"/>
+            <Button
+                style="@style/LeaderboardActivity.Button"
+                android:text="@string/starter_game"
+                android:tag="1" />
+            <Button
+                style="@style/LeaderboardActivity.Button"
+                android:text="@string/veteran_game"
+                android:tag="2" />
+            <Button
+                style="@style/LeaderboardActivity.Button"
+                android:text="@string/all_pro_game"
+                android:tag="3"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <!-- Survival -->
+    <RelativeLayout
+        android:id="@+id/survival_scores_rl"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/header"
+        android:layout_toRightOf="@id/centerShim"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/LeaderboardActivity.TextView"
+                android:gravity="center"
+                android:text="@string/survival_game"/>
+
+            <Button
+                style="@style/LeaderboardActivity.Button"
+                android:text="@string/rookie_game"
+                android:tag="4" />
+            <Button
+                style="@style/LeaderboardActivity.Button"
+                android:text="@string/starter_game"
+                android:tag="5" />
+            <Button
+                style="@style/LeaderboardActivity.Button"
+                android:text="@string/veteran_game"
+                android:tag="6" />
+            <Button
+                style="@style/LeaderboardActivity.Button"
+                android:text="@string/all_pro_game"
+                android:tag="7" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

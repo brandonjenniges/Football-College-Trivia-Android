@@ -1,0 +1,133 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "com.college.football.trivia"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 24
+        versionName "3.4"
+    }
+
+    buildTypes {
+        release {
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def file = output.outputFile
+                    output.outputFile = new File(file.parent, file.name.replace("app-release.apk", "NFL College Trivia " + defaultConfig.versionName + ".apk"));
+                }
+            }
+
+            buildConfigField "boolean", "USE_CRASHLYTICS", "true"
+            ext.enableCrashlytics = true
+            buildConfigField "boolean", "USE_ANALYTICS", "true"
+        }
+
+        debug {
+            debuggable true
+            // disable crashlytics and google analytics
+            buildConfigField "boolean", "USE_CRASHLYTICS", "false"
+            ext.enableCrashlytics = false
+            buildConfigField "boolean", "USE_ANALYTICS", "false"
+        }
+
+        all {
+            //Google Analytics
+            def propertiesFile = rootProject.file('google.properties')
+            if (propertiesFile.exists()) {
+                Properties props = new Properties()
+                props.load(new FileInputStream(rootProject.file("google.properties")))
+                buildConfigField "String", "GOOGLE_ANALYTICS_KEY", props['googleAnalyticsKey']
+                //App id
+                resValue "string", "com.google.android.gms.games.APP_ID", props['app_id']
+
+                //Achievements
+                buildConfigField "String", "achievement_boom", props['achievement_boom']
+                buildConfigField "String", "achievement_oops", props['achievement_oops']
+                buildConfigField "String", "achievement_tictactoe", props['achievement_tictactoe']
+                buildConfigField "String", "achievement_tictacouch", props['achievement_tictacouch']
+                buildConfigField "String", "achievement_jumping_the_snap_count", props['achievement_jumping_the_snap_count']
+                buildConfigField "String", "achievement_pro_rate", props['achievement_pro_rate']
+                buildConfigField "String", "achievement_just_getting_started", props['achievement_just_getting_started']
+                buildConfigField "String", "achievement_established_starter", props['achievement_established_starter']
+                buildConfigField "String", "achievement_seasoned_pro", props['achievement_seasoned_pro']
+                buildConfigField "String", "achievement_grizzly_veteran", props['achievement_grizzly_veteran']
+                buildConfigField "String", "achievement_gridiron_legend", props['achievement_gridiron_legend']
+                buildConfigField "String", "achievement_never_gonna_give_your_up", props['achievement_never_gonna_give_your_up']
+                //Leaderboards
+                buildConfigField "String", "leaderboard_standard_rookie", props['leaderboard_standard_rookie']
+                buildConfigField "String", "leaderboard_standard_starter", props['leaderboard_standard_starter']
+                buildConfigField "String", "leaderboard_standard_veteran", props['leaderboard_standard_veteran']
+                buildConfigField "String", "leaderboard_standard_allpro", props['leaderboard_standard_allpro']
+
+                buildConfigField "String", "leaderboard_survival_rookie", props['leaderboard_survival_rookie']
+                buildConfigField "String", "leaderboard_survival_starter", props['leaderboard_survival_starter']
+                buildConfigField "String", "leaderboard_survival_veteran", props['leaderboard_survival_veteran']
+                buildConfigField "String", "leaderboard_survival_allpro", props['leaderboard_survival_allpro']
+
+            } else {
+                buildConfigField "String", "GOOGLE_ANALYTICS_KEY", "\"NO_KEY\""
+
+                buildConfigField "String", "achievement_boom", "\"KEY\""
+                buildConfigField "String", "achievement_oops", "\"KEY\""
+                buildConfigField "String", "achievement_tictactoe", "\"KEY\""
+                buildConfigField "String", "achievement_tictacouch", "\"KEY\""
+                buildConfigField "String", "achievement_jumping_the_snap_count", "\"KEY\""
+                buildConfigField "String", "achievement_pro_rate", "\"KEY\""
+                buildConfigField "String", "achievement_just_getting_started", "\"KEY\""
+                buildConfigField "String", "achievement_established_starter", "\"KEY\""
+                buildConfigField "String", "achievement_seasoned_pro", "\"KEY\""
+                buildConfigField "String", "achievement_grizzly_veteran", "\"KEY\""
+                buildConfigField "String", "achievement_gridiron_legend", "\"KEY\""
+                buildConfigField "String", "achievement_never_gonna_give_your_up", "\"KEY\""
+                //Leaderboards
+                buildConfigField "String", "leaderboard_standard_rookie", "\"KEY\""
+                buildConfigField "String", "leaderboard_standard_starter", "\"KEY\""
+                buildConfigField "String", "leaderboard_standard_veteran", "\"KEY\""
+                buildConfigField "String", "leaderboard_standard_allpro", "\"KEY\""
+
+                buildConfigField "String", "leaderboard_survival_rookie", "\"KEY\""
+                buildConfigField "String", "leaderboard_survival_starter", "\"KEY\""
+                buildConfigField "String", "leaderboard_survival_veteran", "\"KEY\""
+                buildConfigField "String", "leaderboard_survival_allpro", "\"KEY\""
+            }
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    // Google
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.google.android.gms:play-services-analytics:7.8.0'
+    compile 'com.google.android.gms:play-services-games:7.8.0'
+    // Third Party
+    compile 'com.afollestad:material-dialogs:0.7.6.0'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.daimajia.easing:library:1.0.0@aar'
+    compile 'com.daimajia.androidanimations:library:1.0.6@aar'
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.1@aar') {
+        transitive = true;
+    }
+}

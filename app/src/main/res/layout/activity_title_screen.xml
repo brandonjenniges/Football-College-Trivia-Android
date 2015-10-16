@@ -1,0 +1,68 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/light.background"
+    tools:context="com.college.football.trivia.TitleScreenActivity">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+
+    <ImageView
+        android:layout_below="@id/app_bar"
+        android:id="@+id/header"
+        android:src="@mipmap/header"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:contentDescription="TODO" />
+
+    <LinearLayout
+        android:layout_below="@id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/standardGame"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:text="@string/standard_game"
+            android:textSize="@dimen/abc_text_size_large_material"
+            android:gravity="center"
+            android:textColor="@color/dark.text.color"
+            android:onClick="startGame"/>
+
+        <Button
+            android:id="@+id/survivalGame"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:text="@string/survival_game"
+            android:textSize="@dimen/abc_text_size_large_material"
+            android:gravity="center"
+            android:textColor="@color/dark.text.color"
+            android:onClick="startGame" />
+
+        <Button
+            android:id="@+id/practiceGame"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp"
+            android:text="@string/practice_game"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:textSize="@dimen/abc_text_size_large_material"
+            android:gravity="center"
+            android:textColor="@color/dark.text.color"
+            android:onClick="startGame" />
+    </LinearLayout>
+
+</RelativeLayout>
