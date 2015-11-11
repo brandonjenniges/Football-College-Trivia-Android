@@ -26,3 +26,7 @@ Screenshots
 ![Phone](screenshots/football-android1.png "Title screen")
 ![Phone](screenshots/football-android2.png "Difficulties")
 ![Phone](screenshots/football-android3.png "Game play")
+
+License
+---------------
+This project is released under the MIT license. See LICENSE for details.
