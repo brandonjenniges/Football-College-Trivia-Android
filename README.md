@@ -27,6 +27,10 @@ Screenshots
 ![Phone](screenshots/football-android2.png "Difficulties")
 ![Phone](screenshots/football-android3.png "Game play")
 
+iOS Version
+-----------
+https://github.com/steveholt55/Football-College-Trivia-iOS
+
 License
 ---------------
 This project is released under the MIT license. See LICENSE for details.
