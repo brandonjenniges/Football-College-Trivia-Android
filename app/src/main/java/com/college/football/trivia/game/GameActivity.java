@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.college.football.trivia.FootballTriviaApplication;
 import com.college.football.trivia.R;
 import com.college.football.trivia.ResultsActivity;
 import com.college.football.trivia.model.College;
@@ -21,6 +22,8 @@ import com.college.football.trivia.model.Player;
 import com.college.football.trivia.util.GameController;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,6 +81,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         setQuestion();
 
+        FootballTriviaApplication application = (FootballTriviaApplication) getApplication();
+        if (application.getDefaultTracker() != null) {
+            Tracker mTracker = application.getDefaultTracker();
+            mTracker.setScreenName(this.getLocalClassName());
+            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        }
     }
 
     @Override
