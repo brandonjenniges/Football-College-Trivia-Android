@@ -21,7 +21,6 @@ public class FootballTriviaApplication extends Application {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
         if (BuildConfig.USE_ANALYTICS) {
             analytics.newTracker(BuildConfig.GOOGLE_ANALYTICS_KEY);
-            analytics.setAppOptOut(true);
             analytics.setLocalDispatchPeriod(20);
             analytics.enableAutoActivityReports(this);
         }
