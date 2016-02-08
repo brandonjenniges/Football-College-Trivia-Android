@@ -9,8 +9,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -32,13 +30,6 @@ public class BaseActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        FootballTriviaApplication application = (FootballTriviaApplication) getApplication();
-        if (application.getDefaultTracker() != null) {
-            Tracker mTracker = application.getDefaultTracker();
-            mTracker.setScreenName(this.getLocalClassName());
-            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        }
 
         if (!BuildConfig.DEBUG) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)

@@ -120,7 +120,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     // Google
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.google.android.gms:play-services-analytics:8.4.0'
     compile 'com.google.android.gms:play-services-games:8.4.0'
     // Third Party
     compile('com.github.afollestad.material-dialogs:core:0.8.5.4@aar') {
@@ -133,5 +132,3 @@ dependencies {
         transitive = true;
     }
 }
-
-apply plugin: 'com.google.gms.google-services'
