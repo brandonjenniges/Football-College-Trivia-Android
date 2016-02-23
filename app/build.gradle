@@ -75,7 +75,7 @@ android {
                 buildConfigField "String", "achievement_grizzly_veteran", props['achievement_grizzly_veteran']
                 buildConfigField "String", "achievement_gridiron_legend", props['achievement_gridiron_legend']
                 buildConfigField "String", "achievement_never_gonna_give_your_up", props['achievement_never_gonna_give_your_up']
-                //Leaderboards
+                //LeaderBoards
                 buildConfigField "String", "leaderboard_standard_rookie", props['leaderboard_standard_rookie']
                 buildConfigField "String", "leaderboard_standard_starter", props['leaderboard_standard_starter']
                 buildConfigField "String", "leaderboard_standard_veteran", props['leaderboard_standard_veteran']
@@ -101,7 +101,7 @@ android {
                 buildConfigField "String", "achievement_grizzly_veteran", "\"KEY\""
                 buildConfigField "String", "achievement_gridiron_legend", "\"KEY\""
                 buildConfigField "String", "achievement_never_gonna_give_your_up", "\"KEY\""
-                //Leaderboards
+                //LeaderBoards
                 buildConfigField "String", "leaderboard_standard_rookie", "\"KEY\""
                 buildConfigField "String", "leaderboard_standard_starter", "\"KEY\""
                 buildConfigField "String", "leaderboard_standard_veteran", "\"KEY\""
@@ -121,10 +121,8 @@ dependencies {
     // Google
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.google.android.gms:play-services-games:8.4.0'
+
     // Third Party
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.4@aar') {
-        transitive = true
-    }
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.easing:library:1.0.0@aar'
     compile 'com.daimajia.androidanimations:library:1.0.6@aar'

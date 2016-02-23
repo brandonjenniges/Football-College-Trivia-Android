@@ -1,5 +1,6 @@
 package com.college.football.trivia;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.college.football.trivia.game.PracticeActivity;
 import com.college.football.trivia.game.StandardActivity;
 import com.college.football.trivia.game.SurvivalActivity;
@@ -197,60 +197,51 @@ public class TitleScreenActivity extends BaseActivity {
         GameController.setTier3(temp3);
     }
 
-
-
-
-
-
     public void launchDifficultyDialog() {
-        new AlertDialogWrapper.Builder(this)
-                .setTitle("Difficulty")
-                .setItems(Constants.diffs,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                controller.setCurrent_diff(which + 1);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Difficulty");
+        builder.setItems(Constants.diffs,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        controller.setCurrent_diff(which + 1);
 
-                                switch (which + 1) {
-                                    case Constants.easiest_game_int:
-                                        loadEasyQuestions();
-                                        break;
-                                    case Constants.normal_game_int:
-                                        loadNormalQuestions();
-                                        break;
-                                    case Constants.hard_game_int:
-                                        loadHardQuestions();
-                                        break;
-                                    case Constants.hardest_game_int:
-                                        loadHardestQuestions();
-                                        break;
-                                }
-                                Intent intent;
-
-                                switch (controller.getCurrent_mode()) {
-                                    case Constants.standard_game_int:
-                                        intent = new Intent(getApplicationContext(),
-                                                StandardActivity.class);
-                                        break;
-                                    case Constants.survival_game_int:
-                                        intent = new Intent(getApplicationContext(),
-                                                SurvivalActivity.class);
-                                        break;
-                                    case Constants.practice_game_int:
-                                        intent = new Intent(getApplicationContext(),
-                                                PracticeActivity.class);
-                                        break;
-
-                                    default:
-                                        intent = new Intent(getApplicationContext(),
-                                                PracticeActivity.class);
-                                        break;
-                                }
-
-                                startActivity(intent);
-                            }
+                        switch (which + 1) {
+                            case Constants.easiest_game_int:
+                                loadEasyQuestions();
+                                break;
+                            case Constants.normal_game_int:
+                                loadNormalQuestions();
+                                break;
+                            case Constants.hard_game_int:
+                                loadHardQuestions();
+                                break;
+                            case Constants.hardest_game_int:
+                                loadHardestQuestions();
+                                break;
                         }
-                )
-                .show();
+                        Intent intent;
+
+                        switch (controller.getCurrent_mode()) {
+                            case Constants.standard_game_int:
+                                intent = new Intent(getApplicationContext(),
+                                        StandardActivity.class);
+                                break;
+                            case Constants.survival_game_int:
+                                intent = new Intent(getApplicationContext(),
+                                        SurvivalActivity.class);
+                                break;
+                            case Constants.practice_game_int:
+                            default:
+                                intent = new Intent(getApplicationContext(),
+                                        PracticeActivity.class);
+                                break;
+                        }
+
+                        startActivity(intent);
+                    }
+                }
+        );
+        builder.show();
     }
 
     public void loadEasyQuestions() {
@@ -267,7 +258,7 @@ public class TitleScreenActivity extends BaseActivity {
     public void loadNormalQuestions() {
         ArrayList<Player> tempArr = new ArrayList<>();
         for(Player p:allPlayers){
-            if( p.getPosition().equals("QB") || p.getPosition().equals("HB") ||p.getPosition().equals("WR")){
+            if( p.getPosition().equals("QB") || p.getPosition().equals("HB") || p.getPosition().equals("WR")){
                 tempArr.add(p);
             }
         }
