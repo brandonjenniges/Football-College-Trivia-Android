@@ -4,24 +4,24 @@
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
     android:background="@color/light.background"
-    tools:context="com.college.football.trivia.TitleScreenActivity">
+    tools:context=".title.TitleScreenActivity">
 
     <include
         android:id="@+id/app_bar"
         layout="@layout/app_bar" />
 
     <ImageView
-        android:layout_below="@id/app_bar"
         android:id="@+id/header"
-        android:src="@mipmap/header"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:contentDescription="TODO" />
+        android:layout_below="@id/app_bar"
+        android:contentDescription="TODO"
+        android:src="@mipmap/header" />
 
     <LinearLayout
-        android:layout_below="@id/header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/header"
         android:layout_weight="4"
         android:orientation="vertical">
 
@@ -32,11 +32,11 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="#00000000"
-            android:text="@string/standard_game"
-            android:textSize="@dimen/abc_text_size_large_material"
             android:gravity="center"
+            android:text="@string/standard_game"
             android:textColor="@color/dark.text.color"
-            android:onClick="startGame"/>
+            android:textSize="@dimen/abc_text_size_large_material"
+            />
 
         <Button
             android:id="@+id/survivalGame"
@@ -45,24 +45,22 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="#00000000"
-            android:text="@string/survival_game"
-            android:textSize="@dimen/abc_text_size_large_material"
             android:gravity="center"
+            android:text="@string/survival_game"
             android:textColor="@color/dark.text.color"
-            android:onClick="startGame" />
+            android:textSize="@dimen/abc_text_size_large_material" />
 
         <Button
             android:id="@+id/practiceGame"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_margin="10dp"
-            android:text="@string/practice_game"
             android:layout_weight="1"
             android:background="#00000000"
-            android:textSize="@dimen/abc_text_size_large_material"
             android:gravity="center"
+            android:text="@string/practice_game"
             android:textColor="@color/dark.text.color"
-            android:onClick="startGame" />
+            android:textSize="@dimen/abc_text_size_large_material" />
     </LinearLayout>
 
 </RelativeLayout>

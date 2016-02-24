@@ -1,4 +1,4 @@
-package com.college.football.trivia;
+package com.college.football.trivia.result;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.college.football.trivia.BaseActivity;
+import com.college.football.trivia.BuildConfig;
+import com.college.football.trivia.LeaderboardActivity;
+import com.college.football.trivia.R;
 import com.college.football.trivia.game.PracticeActivity;
 import com.college.football.trivia.game.StandardActivity;
 import com.college.football.trivia.game.SurvivalActivity;

@@ -1,15 +1,12 @@
-package com.college.football.trivia;
+package com.college.football.trivia.title;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
+import com.college.football.trivia.R;
 import com.college.football.trivia.game.PracticeActivity;
 import com.college.football.trivia.game.StandardActivity;
 import com.college.football.trivia.game.SurvivalActivity;
@@ -17,7 +14,6 @@ import com.college.football.trivia.model.College;
 import com.college.football.trivia.model.Player;
 import com.college.football.trivia.util.Constants;
 import com.college.football.trivia.util.GameController;
-import com.google.android.gms.games.Games;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,91 +24,27 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-
-public class TitleScreenActivity extends BaseActivity {
+public class TitleScreenPresenter {
 
     private ArrayList<Player> allPlayers = new ArrayList<>();
     private GameController controller;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_title_screen);
+    private TitleScreenView view;
+    private Context context;
 
+    public TitleScreenPresenter(TitleScreenView view ) {
+        this.view = view;
+        this.context = (Context) view;
         controller = GameController.getInstance();
-
         loadPlayersJsonData();
         loadCollegesJsonData();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_title_screen, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.action_rate:
-                this.startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                        .parse(Constants.app_url)));
-                return  true;
-            case R.id.action_leaderboard:
-                if (BuildConfig.DEBUG || mGoogleApiClient.isConnected()) {
-                    startActivity(new Intent(getApplicationContext(),
-                            LeaderboardActivity.class));
-                } else {
-                    mGoogleApiClient.connect();
-                }
-                return true;
-            case R.id.action_achievements:
-                if (BuildConfig.DEBUG) {
-                    return true;
-                }
-
-                if (mGoogleApiClient.isConnected()) {
-                    startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient),
-                            5);
-                } else {
-                    mGoogleApiClient.connect();
-                }
-                return true;
-            /*
-            case R.id.action_about:
-                Toast.makeText(getApplicationContext(), "About", Toast.LENGTH_SHORT).show();
-                return true;
-                */
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void startGame(View view) {
-        int id = view.getId();
-        switch (id) {
-            case R.id.standardGame:
-                controller.setCurrent_mode(Constants.standard_game_int);
-                launchDifficultyDialog();
-                break;
-            case R.id.survivalGame:
-                controller.setCurrent_mode(Constants.survival_game_int);
-                launchDifficultyDialog();
-                break;
-            case R.id.practiceGame:
-                controller.setCurrent_mode(Constants.practice_game_int);
-                launchDifficultyDialog();
-                break;
-        }
     }
 
     public void loadPlayersJsonData() {
         StringBuffer sb = new StringBuffer();
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new InputStreamReader(getAssets().open(
+            br = new BufferedReader(new InputStreamReader(context.getAssets().open(
                     Constants.PLAYERS_JSON_FILE)));
             String temp;
             while ((temp = br.readLine()) != null)
@@ -133,7 +65,7 @@ public class TitleScreenActivity extends BaseActivity {
         StringBuffer sb = new StringBuffer();
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new InputStreamReader(getAssets().open(
+            br = new BufferedReader(new InputStreamReader(context.getAssets().open(
                     Constants.COLLEGE_JSON_FILE)));
             String temp;
             while ((temp = br.readLine()) != null)
@@ -149,7 +81,6 @@ public class TitleScreenActivity extends BaseActivity {
         }
         parseCollegesJsonData(sb.toString());
     }
-
     public void parsePlayersJsonData(String json) {
         try {
             JSONObject jsonObjMain = new JSONObject(json);
@@ -197,53 +128,6 @@ public class TitleScreenActivity extends BaseActivity {
         GameController.setTier3(temp3);
     }
 
-    public void launchDifficultyDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Difficulty");
-        builder.setItems(Constants.diffs,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        controller.setCurrent_diff(which + 1);
-
-                        switch (which + 1) {
-                            case Constants.easiest_game_int:
-                                loadEasyQuestions();
-                                break;
-                            case Constants.normal_game_int:
-                                loadNormalQuestions();
-                                break;
-                            case Constants.hard_game_int:
-                                loadHardQuestions();
-                                break;
-                            case Constants.hardest_game_int:
-                                loadHardestQuestions();
-                                break;
-                        }
-                        Intent intent;
-
-                        switch (controller.getCurrent_mode()) {
-                            case Constants.standard_game_int:
-                                intent = new Intent(getApplicationContext(),
-                                        StandardActivity.class);
-                                break;
-                            case Constants.survival_game_int:
-                                intent = new Intent(getApplicationContext(),
-                                        SurvivalActivity.class);
-                                break;
-                            case Constants.practice_game_int:
-                            default:
-                                intent = new Intent(getApplicationContext(),
-                                        PracticeActivity.class);
-                                break;
-                        }
-
-                        startActivity(intent);
-                    }
-                }
-        );
-        builder.show();
-    }
-
     public void loadEasyQuestions() {
         ArrayList<Player> tempArr = new ArrayList<>();
         for(Player p:allPlayers){
@@ -283,4 +167,66 @@ public class TitleScreenActivity extends BaseActivity {
         GameController.setGamePlayers(allPlayers);
     }
 
+    public void startGame(int id) {
+        switch (id) {
+            case R.id.standardGame:
+                controller.setCurrent_mode(Constants.standard_game_int);
+                launchDifficultyDialog();
+                break;
+            case R.id.survivalGame:
+                controller.setCurrent_mode(Constants.survival_game_int);
+                launchDifficultyDialog();
+                break;
+            case R.id.practiceGame:
+                controller.setCurrent_mode(Constants.practice_game_int);
+                launchDifficultyDialog();
+                break;
+        }
+    }
+    public void launchDifficultyDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Difficulty");
+        builder.setItems(Constants.diffs,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        controller.setCurrent_diff(which + 1);
+
+                        switch (which + 1) {
+                            case Constants.easiest_game_int:
+                                loadEasyQuestions();
+                                break;
+                            case Constants.normal_game_int:
+                                loadNormalQuestions();
+                                break;
+                            case Constants.hard_game_int:
+                                loadHardQuestions();
+                                break;
+                            case Constants.hardest_game_int:
+                                loadHardestQuestions();
+                                break;
+                        }
+                        Intent intent;
+
+                        switch (controller.getCurrent_mode()) {
+                            case Constants.standard_game_int:
+                                intent = new Intent(context,
+                                        StandardActivity.class);
+                                break;
+                            case Constants.survival_game_int:
+                                intent = new Intent(context,
+                                        SurvivalActivity.class);
+                                break;
+                            case Constants.practice_game_int:
+                            default:
+                                intent = new Intent(context,
+                                        PracticeActivity.class);
+                                break;
+                        }
+
+                        context.startActivity(intent);
+                    }
+                }
+        );
+        builder.show();
+    }
 }

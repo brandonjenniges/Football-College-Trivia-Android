@@ -14,9 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.college.football.trivia.FootballTriviaApplication;
 import com.college.football.trivia.R;
-import com.college.football.trivia.ResultsActivity;
+import com.college.football.trivia.result.ResultsActivity;
 import com.college.football.trivia.model.College;
 import com.college.football.trivia.model.Player;
 import com.college.football.trivia.util.GameController;
