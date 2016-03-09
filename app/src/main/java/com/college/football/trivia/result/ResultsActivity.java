@@ -1,4 +1,4 @@
-package com.college.football.trivia.result;
+package com.college.football.trivia.Result;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,11 +15,11 @@ import com.college.football.trivia.BaseActivity;
 import com.college.football.trivia.BuildConfig;
 import com.college.football.trivia.LeaderboardActivity;
 import com.college.football.trivia.R;
-import com.college.football.trivia.game.PracticeActivity;
-import com.college.football.trivia.game.StandardActivity;
-import com.college.football.trivia.game.SurvivalActivity;
-import com.college.football.trivia.util.Constants;
-import com.college.football.trivia.util.GameController;
+import com.college.football.trivia.Game.PracticeActivity;
+import com.college.football.trivia.Game.StandardActivity;
+import com.college.football.trivia.Game.SurvivalActivity;
+import com.college.football.trivia.Util.Constants;
+import com.college.football.trivia.Util.GameController;
 import com.google.android.gms.games.Games;
 
 

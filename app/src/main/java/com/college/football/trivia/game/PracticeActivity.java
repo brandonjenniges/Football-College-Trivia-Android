@@ -1,9 +1,8 @@
-package com.college.football.trivia.game;
+package com.college.football.trivia.Game;
 
 import android.os.Bundle;
-import android.view.View;
 
-public class PracticeActivity extends GameActivity implements View.OnClickListener {
+public class PracticeActivity extends GameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

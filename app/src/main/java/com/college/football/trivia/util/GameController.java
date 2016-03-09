@@ -1,7 +1,7 @@
-package com.college.football.trivia.util;
+package com.college.football.trivia.Util;
 
-import com.college.football.trivia.model.College;
-import com.college.football.trivia.model.Player;
+import com.college.football.trivia.Model.College;
+import com.college.football.trivia.Model.Player;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,6 @@ public class GameController {
     private static Player current_player;
     private static boolean playing;
 
-    private static ArrayList<Player> gamePlayers;
     private static ArrayList<College> tier1;
     private static ArrayList<College> tier2;
     private static ArrayList<College> tier3;
@@ -40,11 +39,7 @@ public class GameController {
     }
 
     public static ArrayList<Player> getGamePlayers() {
-        return gamePlayers;
-    }
-
-    public static void setGamePlayers(ArrayList<Player> gamePlayers) {
-        GameController.gamePlayers = gamePlayers;
+        return new QuestionLoader().easyQuestions();
     }
 
     public static ArrayList<College> getTier2() {

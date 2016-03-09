@@ -7,8 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.college.football.trivia.util.Constants;
-import com.college.football.trivia.util.GameController;
+import com.college.football.trivia.Util.Constants;
+import com.college.football.trivia.Util.GameController;
 import com.google.android.gms.games.Games;
 
 

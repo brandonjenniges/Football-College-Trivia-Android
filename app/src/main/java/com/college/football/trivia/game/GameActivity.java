@@ -1,82 +1,48 @@
-package com.college.football.trivia.game;
+package com.college.football.trivia.Game;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.college.football.trivia.Model.Player;
 import com.college.football.trivia.R;
-import com.college.football.trivia.result.ResultsActivity;
-import com.college.football.trivia.model.College;
-import com.college.football.trivia.model.Player;
-import com.college.football.trivia.util.GameController;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
+import com.college.football.trivia.Result.ResultsActivity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class GameActivity extends AppCompatActivity implements View.OnClickListener {
+public class GameActivity extends AppCompatActivity implements GameView {
 
     protected Toolbar toolbar;
 
-    private TextView playerText;
-    private TextView teamText;
-    protected TextView scoreText;
-    protected TextView gameText;
-    protected TextView highScoreText;
+    @Bind(R.id.playerText) TextView playerText;
+    @Bind(R.id.teamText) TextView teamText;
+    @Bind(R.id.currentScoreText) TextView scoreText;
+    @Bind(R.id.gameValueText) TextView gameText;
+    @Bind(R.id.highScoreText) TextView highScoreText;
 
-    protected Button choice1;
-    protected Button choice2;
-    protected Button choice3;
-    protected Button choice4;
+    @Bind(R.id.choice1) Button choice1;
+    @Bind(R.id.choice2) Button choice2;
+    @Bind(R.id.choice3) Button choice3;
+    @Bind(R.id.choice4) Button choice4;
 
-    private List<ArrayList<College>> tierArray = new ArrayList<>();
-
-    private Random r;
-    private ArrayList<Player> questions;
-
-    private ArrayList<Button> buttons = new ArrayList<>();
-
-    private ArrayList<Integer> choices = new ArrayList<>();
-    private String[] sortedChoices = new String[4];
-
-    protected boolean handledClick;
-    private Button correctButton;
-    private boolean canGuess;
-
-    protected GameController controller;
+    protected GamePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        controller = GameController.getInstance();
-        initializeView();
-
-        ArrayList<College> tier1 = GameController.getTier1();
-        ArrayList<College> tier2 = GameController.getTier2();
-        ArrayList<College> tier3 = GameController.getTier3();
-        tierArray.add(tier1);
-        tierArray.add(tier2);
-        tierArray.add(tier3);
-
-        getQuestions();
-
-        r = new Random();
-
-        setQuestion();
+        setContentView(R.layout.game);
+        ButterKnife.bind(this);
+        presenter = new GamePresenter(this);
+        presenter.setup();
     }
 
     @Override
@@ -111,217 +77,85 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    @Override
-    public void onClick(View v) {
-        if (canGuess) {
-            canGuess = false;
-            guessMade(v);
-        }
-    }
-
-    /**
-     * Method called when a guess is made, to see if guess was correct
-     * <p/>
-     * v - button clicked on guess attempt made
-     */
-    public void guessMade(final View v) {
-        if (((Button) v).getText().toString()
-                .equals(controller.getCurrent_player().getCollege())) {
-            correctAnswer();
-            YoYo.with(Techniques.Pulse).duration(400).playOn(v);
-            ((Button) v).setTextColor(getResources().getColor(R.color.correct_guess_color));
-
-
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ((Button) v).setTextColor(getResources().getColor(R.color.dark_text_color));
-                    setQuestion();
-
-                }
-            }, 400);
-
-        } else {
-            wrongAnswer();
-            YoYo.with(Techniques.Shake).duration(1000).playOn(v);
-            YoYo.with(Techniques.Pulse).duration(1000).playOn(correctButton);
-            ((Button) v).setTextColor(getResources().getColor(R.color.incorrect_guess_color));
-            correctButton.setTextColor(getResources().getColor(R.color.correct_guess_color));
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ((Button) v).setTextColor(getResources().getColor(R.color.dark_text_color));
-                    correctButton.setTextColor(getResources().getColor(R.color.dark_text_color));
-                    setQuestion();
-
-                }
-            }, 1000);
-        }
-
-    }
-
-    protected void correctAnswer() {
-        controller.addCurrent_score();
-        if (!controller.getWrong_answer()) {
-            controller.incrementStart_streak();
-        }
-        controller.incrementCurrent_streak();
-        if (controller.getCurrent_streak() > controller.getBest_streak()) {
-            controller.incrementBest_streak();
-        }
-        controller.resetCurrent_worst();
-        scoreText.setText(controller.getCurrent_score() + "");
-    }
-
-    protected void wrongAnswer() {
-        controller.setWrong_answer(true);
-        controller.resetCurrent_streak();
-        controller.incrementCurrent_worst();
-
-        if (controller.getCurrent_worst() > controller.getWorst_streak()) {
-            controller.incrementWorst_streak();
-        }
-    }
-
-    public void initializeView() {
-        setContentView(R.layout.game);
-
-        playerText = (TextView) findViewById(R.id.playerText);
-        teamText = (TextView) findViewById(R.id.teamText);
-        gameText = (TextView) findViewById(R.id.gameValueText);
-        scoreText = (TextView) findViewById(R.id.currentScoreText);
-        highScoreText = (TextView) findViewById(R.id.highScoreText);
-
-        choice1 = (Button) findViewById(R.id.choice1);
-        choice2 = (Button) findViewById(R.id.choice2);
-        choice3 = (Button) findViewById(R.id.choice3);
-        choice4 = (Button) findViewById(R.id.choice4);
-
-        buttons.add(choice1);
-        buttons.add(choice2);
-        buttons.add(choice3);
-        buttons.add(choice4);
-
-        for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).setOnClickListener(this);
-        }
-
-        controller.setPlaying(true);
-        controller.setCurrent_score(0);
-        controller.setWrong_answer(false);
-        controller.resetStart_streak();
-        controller.resetCurrent_streak();
-        controller.resetCurrent_worst();
-        controller.resetBest_streak();
-        controller.resetWorst_streak();
-        controller.setProcess_postData(true);
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        int bestScore = prefs.getInt("FootballScore" + ((controller
-                .getCurrent_mode() - 1) * 4)
-                + controller.getCurrent_diff(), 0);
-
-        controller
-                .setMod_dif_high(bestScore);
-
-
-        scoreText.setText(String.valueOf(controller.getCurrent_score()));
-        highScoreText.setText(String.valueOf(controller.getMod_dif_high()));
-        gameText.setText("");
-    }
-
-    /**
-     * Get a list of all the questions for game mode
-     */
-    public void getQuestions() {
-        questions = GameController.getGamePlayers();
-        Log.d("QUESTION Count", "" + questions.size());
-    }
-
-    public void fillChoices() {
-        for (int i = 0; i < questions.size(); i++) {
-            choices.add(i);
-        }
-    }
-
-    /**
-     * Sets question to view
-     */
-    public void setQuestion() {
-        canGuess = true;
-
-        if (choices.size() == 0) {
-            fillChoices();
-        }
-
-        int l = r.nextInt(choices.size());
-        controller.setCurrent_player(questions.get(choices.get(l)));
-        choices.remove(l);
-
-        Log.d("TAG", choices.size() + ", " + l);
-
-        playerText.setText(controller.getCurrent_player().getFirst_name() + " "
-                + controller.getCurrent_player().getLast_name() + " "
-                        + controller.getCurrent_player().getPosition() +" #"
-                + controller.getCurrent_player().getJersey_num()
-                );
-        teamText.setText(controller.getCurrent_player().getTeam());
-
-        getAnswers();
-        sortAnswers();
-        displayAnswers();
-
-    }
-
-    public void getAnswers() {
-        for (int i = 0; i < sortedChoices.length; i++) {
-            sortedChoices[i] = "";
-        }
-        sortedChoices[0] = controller.getCurrent_player().getCollege();
-        String college;
-        int temp;
-
-        for (int i = 1; i <= 3; i++) {
-            do {
-                temp = r.nextInt(tierArray.get(
-                        controller.getCurrent_player().getCollege_tier() - 1)
-                        .size());
-                college = tierArray
-                        .get(controller.getCurrent_player().getCollege_tier() - 1)
-                        .get(temp).getName();
-            }
-            while (sortedChoices[0].equals(college) || sortedChoices[1].equals(college) || sortedChoices[2].equals(college) || sortedChoices[3].equals(college));
-            sortedChoices[i] = college;
-        }
-
-    }
-
-    public void sortAnswers() {
-        Arrays.sort(sortedChoices);
-    }
-
-    public void displayAnswers() {
-        int i = 0;
-        for (String answer : sortedChoices) {
-            if (answer.equals(controller.getCurrent_player().getCollege())) {
-                correctButton = buttons.get(i);
-            }
-            buttons.get(i).setText(answer);
-            i++;
-        }
-
-        handledClick = false;
+    @SuppressWarnings("unused")
+    @OnClick({R.id.choice1, R.id.choice2, R.id.choice3, R.id.choice4})
+    public void onClick(Button button) {
+        presenter.guessMade(button);
     }
 
     /**
      * Game is over, end game and go to Results screen
      */
+    @Override
     public void endGame() {
         Intent i = new Intent(this, ResultsActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         finish();
     }
+
+    @Override
+    public Button[] getButtons() {
+        return new Button[] { choice1, choice2, choice3, choice4 };
+    }
+
+    @Override
+    public int getHighScore() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        int bestScore = prefs.getInt("FootballScore" + ((presenter.getController()
+                .getCurrent_mode() - 1) * 4)
+                + presenter.getController().getCurrent_diff(), 0);
+        return bestScore;
+    }
+
+    @Override
+    public void setScoreText(String text) {
+        scoreText.setText(text);
+    }
+
+    @Override
+    public void setHighScoreText(String text) {
+        highScoreText.setText(text);
+    }
+
+    @Override
+    public void setGameText(String text) {
+        gameText.setText(text);
+    }
+
+    @Override
+    public void setQuestionText(Player player) {
+        playerText.setText(player.getFirst_name() + " "
+                        + player.getLast_name() + " "
+                        + player.getPosition() + " #"
+                        + player.getJersey_num()
+        );
+        teamText.setText(player.getTeam());
+    }
+
+    @Override
+    public int getWrongGuessTextColor() {
+        return getResources().getColor(R.color.incorrect_guess_color);
+    }
+
+    @Override
+    public int getCorrectGuessTextColor() {
+        return getResources().getColor(R.color.correct_guess_color);
+    }
+
+    @Override
+    public int getRegularTextColor() {
+        return getResources().getColor(R.color.dark_text_color);
+    }
+
+    @Override
+    public int getQuestionTextColor() {
+        return getResources().getColor(R.color.question_text_color);
+    }
+
+    @Override
+    public TextView getGameTextView() {
+        return gameText;
+    }
+
 }

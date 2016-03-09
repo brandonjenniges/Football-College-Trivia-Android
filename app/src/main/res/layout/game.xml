@@ -12,9 +12,9 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@color/primaryColor"
-        android:elevation="1dp">
+        android:elevation="1dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/playerText"
@@ -202,7 +202,7 @@
                 android:gravity="center"
                 android:text="@string/college"
                 android:textColor="@color/dark.text.color"
-                android:textSize="@dimen/abc_text_size_large_material"/>
+                android:textSize="@dimen/abc_text_size_large_material" />
 
             <View
                 android:layout_width="fill_parent"

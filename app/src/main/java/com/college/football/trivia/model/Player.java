@@ -1,9 +1,15 @@
-package com.college.football.trivia.model;
+package com.college.football.trivia.Model;
 
-/**
- * Created by brandonjenniges on 2/23/15.
- */
+import com.college.football.trivia.Util.Constants;
+import com.college.football.trivia.Util.QuestionLoader;
+
+import java.util.ArrayList;
+
 public class Player {
+    private static Player[] allPlayers;
+    private static Player[] rookiePlayers;
+    private static Player[] starterPlayers;
+    private static Player[] veteranPlayers;
     private int id;
     private String first_name;
     private String last_name;
@@ -13,7 +19,6 @@ public class Player {
     private int jersey_num;
     private int college_tier;
     private int overall;
-
     public Player(int id, String first_name, String last_name, String team,
                   String college, String position, int jersey_num,
                   int college_tier, int overall) {
@@ -26,6 +31,42 @@ public class Player {
         this.jersey_num = jersey_num;
         this.college_tier = college_tier;
         this.overall = overall;
+    }
+
+    public static Player[] getAllPlayers() {
+        if (allPlayers == null) {
+            QuestionLoader questionLoader = new QuestionLoader();
+            ArrayList<Player> players = questionLoader.hardestQuestions();
+            allPlayers = players.toArray(new Player[players.size()]);
+        }
+        return allPlayers;
+    }
+
+    public static Player[] getRookiePlayers() {
+        if (rookiePlayers == null) {
+            QuestionLoader questionLoader = new QuestionLoader();
+            ArrayList<Player> players = questionLoader.easyQuestions();
+            rookiePlayers = players.toArray(new Player[players.size()]);
+        }
+        return rookiePlayers;
+    }
+
+    public static Player[] getStarterPlayers() {
+        if (starterPlayers == null) {
+            QuestionLoader questionLoader = new QuestionLoader();
+            ArrayList<Player> players = questionLoader.normalQuestions();
+            starterPlayers = players.toArray(new Player[players.size()]);
+        }
+        return starterPlayers;
+    }
+
+    public static Player[] getVeteranPlayers() {
+        if (veteranPlayers == null) {
+            QuestionLoader questionLoader = new QuestionLoader();
+            ArrayList<Player> players = questionLoader.hardQuestions();
+            veteranPlayers = players.toArray(new Player[players.size()]);
+        }
+        return veteranPlayers;
     }
 
     public int getId() {
@@ -100,6 +141,8 @@ public class Player {
         this.overall = overall;
     }
 
+
+
     @Override
     public String toString() {
         return "Player [id=" + id + ", first_name=" + first_name
@@ -109,4 +152,15 @@ public class Player {
                 + college_tier + "]";
     }
 
+    public static Player[] getPlayers(int current_diff) {
+        if (current_diff == Constants.easiest_game_int) {
+            return Player.getRookiePlayers();
+        } else if (current_diff == Constants.normal_game_int) {
+            return Player.getStarterPlayers();
+        } else if (current_diff == Constants.hard_game_int) {
+            return Player.getVeteranPlayers();
+        } else {
+            return Player.getAllPlayers();
+        }
+    }
 }

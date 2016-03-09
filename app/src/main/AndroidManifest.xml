@@ -20,7 +20,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".title.TitleScreenActivity"
+            android:name=".Title.TitleScreenActivity"
             android:label="@string/app_name"
             android:screenOrientation="nosensor">
             <intent-filter>
@@ -29,16 +29,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".game.PracticeActivity"
+        <activity android:name=".Game.PracticeActivity"
             android:label=" "
             android:screenOrientation="nosensor"/>
-        <activity android:name=".game.StandardActivity"
+        <activity android:name=".Game.StandardActivity"
             android:label=" "
             android:screenOrientation="nosensor"/>
-        <activity android:name=".game.SurvivalActivity"
+        <activity android:name=".Game.SurvivalActivity"
             android:label=" "
             android:screenOrientation="nosensor"/>
-        <activity android:name=".result.ResultsActivity"
+        <activity android:name=".Result.ResultsActivity"
             android:label=" "
             android:screenOrientation="nosensor"/>
         <activity android:name=".LeaderboardActivity"

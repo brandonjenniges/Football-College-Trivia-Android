@@ -1,4 +1,4 @@
-package com.college.football.trivia.model;
+package com.college.football.trivia.Model;
 
 /**
  * Created by brandonjenniges on 2/23/15.

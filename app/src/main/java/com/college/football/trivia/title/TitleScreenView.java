@@ -1,5 +1,6 @@
-package com.college.football.trivia.title;
+package com.college.football.trivia.Title;
 
 interface TitleScreenView {
 
+    void showDifficultyDialog();
 }

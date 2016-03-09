@@ -1,4 +1,4 @@
-package com.college.football.trivia.util;
+package com.college.football.trivia.Util;
 
 import com.college.football.trivia.BuildConfig;
 
