@@ -3,8 +3,6 @@ package com.college.football.trivia.Game;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
-import com.college.football.trivia.R;
-
 public class StandardActivity extends GameActivity {
 
     public static MyCount counter;

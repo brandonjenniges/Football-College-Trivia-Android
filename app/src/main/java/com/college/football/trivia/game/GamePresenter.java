@@ -7,7 +7,6 @@ import android.widget.Button;
 import com.college.football.trivia.Model.College;
 import com.college.football.trivia.Model.Game;
 import com.college.football.trivia.Model.Player;
-import com.college.football.trivia.Util.Constants;
 import com.college.football.trivia.Util.GameController;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;

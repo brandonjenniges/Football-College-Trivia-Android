@@ -53,11 +53,6 @@ public class LeaderboardActivity extends BaseActivity implements View.OnClickLis
                     mGoogleApiClient.connect();
                 }
                 return true;
-            /*
-            case R.id.action_about:
-                Toast.makeText(getApplicationContext(), "About", Toast.LENGTH_SHORT).show();
-                return true;
-                */
         }
 
         return super.onOptionsItemSelected(item);
@@ -65,10 +60,7 @@ public class LeaderboardActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-
-        }
-
+        showLeaderboard(v);
     }
 
     public void initializeView() {

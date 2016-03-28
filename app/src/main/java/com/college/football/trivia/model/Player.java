@@ -1,6 +1,5 @@
 package com.college.football.trivia.Model;
 
-import com.college.football.trivia.Util.Constants;
 import com.college.football.trivia.Util.QuestionLoader;
 
 import java.util.ArrayList;

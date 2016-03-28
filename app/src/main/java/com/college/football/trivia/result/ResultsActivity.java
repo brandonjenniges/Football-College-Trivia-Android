@@ -13,12 +13,12 @@ import android.widget.TextView;
 
 import com.college.football.trivia.BaseActivity;
 import com.college.football.trivia.BuildConfig;
-import com.college.football.trivia.LeaderboardActivity;
-import com.college.football.trivia.Model.Game;
-import com.college.football.trivia.R;
 import com.college.football.trivia.Game.PracticeActivity;
 import com.college.football.trivia.Game.StandardActivity;
 import com.college.football.trivia.Game.SurvivalActivity;
+import com.college.football.trivia.LeaderboardActivity;
+import com.college.football.trivia.Model.Game;
+import com.college.football.trivia.R;
 import com.college.football.trivia.Util.Constants;
 import com.college.football.trivia.Util.GameController;
 import com.google.android.gms.games.Games;

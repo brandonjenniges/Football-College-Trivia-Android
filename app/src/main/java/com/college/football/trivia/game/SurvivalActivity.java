@@ -2,8 +2,6 @@ package com.college.football.trivia.Game;
 
 import android.os.Bundle;
 
-import com.college.football.trivia.R;
-
 public class SurvivalActivity extends GameActivity {
 
     @Override
@@ -17,5 +15,4 @@ public class SurvivalActivity extends GameActivity {
         super.onResume();
         presenter.onResume();
     }
-
 }

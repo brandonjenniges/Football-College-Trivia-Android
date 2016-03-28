@@ -2,7 +2,6 @@ package com.college.football.trivia.Title;
 
 import com.college.football.trivia.Model.Game;
 import com.college.football.trivia.R;
-import com.college.football.trivia.Util.Constants;
 import com.college.football.trivia.Util.GameController;
 
 public class TitleScreenPresenter {

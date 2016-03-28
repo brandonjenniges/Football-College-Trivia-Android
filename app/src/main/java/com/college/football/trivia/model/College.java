@@ -1,8 +1,5 @@
 package com.college.football.trivia.Model;
 
-/**
- * Created by brandonjenniges on 2/23/15.
- */
 public class College {
     private int id;
     private String name;
