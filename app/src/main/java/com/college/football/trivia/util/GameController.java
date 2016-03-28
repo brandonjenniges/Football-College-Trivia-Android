@@ -9,7 +9,6 @@ public class GameController {
 
     private static GameController INSTANCE;
 
-    private static int mod_dif_high;
     private static boolean wrong_answer;
     private static int start_streak;
     private static int best_streak;
@@ -56,14 +55,6 @@ public class GameController {
 
     public static void setTier3(ArrayList<College> tier3) {
         GameController.tier3 = tier3;
-    }
-
-    public int getMod_dif_high() {
-        return mod_dif_high;
-    }
-
-    public void setMod_dif_high(int mod_dif_high) {
-        GameController.mod_dif_high = mod_dif_high;
     }
 
     public Player getCurrent_player() {

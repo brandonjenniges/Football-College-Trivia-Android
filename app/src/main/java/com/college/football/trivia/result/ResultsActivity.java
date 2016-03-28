@@ -1,10 +1,8 @@
 package com.college.football.trivia.Result;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +19,7 @@ import com.college.football.trivia.Model.Game;
 import com.college.football.trivia.R;
 import com.college.football.trivia.Util.Constants;
 import com.college.football.trivia.Util.GameController;
+import com.college.football.trivia.Util.ScoreManager;
 import com.google.android.gms.games.Games;
 
 
@@ -187,16 +186,9 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
     public void saveLocalScore() {
         int score = game.getScore();
         resultScore.setText("Score: " + score);
-
-        String highScoreKey = game.getHighScoreKey();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        int bestScore = prefs.getInt(highScoreKey, 0);
-
-
-        if (score > bestScore) {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt(highScoreKey, score);
-            editor.commit();
+        if (score > game.getHighScore()) {
+            game.setHighScore(score);
+            ScoreManager.saveHighScore(game, this);
         }
     }
 }

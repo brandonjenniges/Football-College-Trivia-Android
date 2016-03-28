@@ -1,7 +1,6 @@
 package com.college.football.trivia.Title;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import com.college.football.trivia.LeaderboardActivity;
 import com.college.football.trivia.Model.Game;
 import com.college.football.trivia.R;
 import com.college.football.trivia.Util.Constants;
+import com.college.football.trivia.Util.ScoreManager;
 import com.google.android.gms.games.Games;
 
 import butterknife.ButterKnife;
@@ -81,7 +81,8 @@ public class TitleScreenActivity extends BaseActivity implements TitleScreenView
         builder.setTitle("Difficulty");
         builder.setItems(Constants.diffs,
                 (dialog, which) -> {
-                    Game game = new Game(mode, Game.difficultyFromInt(which));
+                    Game.Difficulty difficulty = Game.difficultyFromInt(which);
+                    Game game = new Game(mode, difficulty, ScoreManager.getHighScore(mode, difficulty, this));
                     Intent intent;
 
                     switch (game.getMode()) {

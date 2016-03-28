@@ -1,7 +1,6 @@
 package com.college.football.trivia.Game;
 
 import android.os.Handler;
-import android.util.Log;
 import android.widget.Button;
 
 import com.college.football.trivia.Model.College;
@@ -80,17 +79,9 @@ public class GamePresenter {
         controller.resetWorst_streak();
         controller.setProcess_postData(true);
 
-        int bestScore = view.getHighScore();
-
-        controller.setMod_dif_high(bestScore);
-
         view.setScoreText(String.valueOf(game.getScore()));
-        view.setHighScoreText(String.valueOf(this.getController().getMod_dif_high()));
+        view.setHighScoreText(String.valueOf(game.getHighScore()));
         view.setGameText("");
-    }
-
-    public GameController getController() {
-        return controller;
     }
 
     public void checkGuess(Button button) {
