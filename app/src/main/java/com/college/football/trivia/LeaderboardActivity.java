@@ -13,15 +13,11 @@ import com.google.android.gms.games.Games;
 
 
 public class LeaderboardActivity extends BaseActivity implements View.OnClickListener {
-
     protected GameController controller;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         controller = GameController.getInstance();
         initializeView();
     }
