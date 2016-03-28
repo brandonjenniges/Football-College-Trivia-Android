@@ -13,6 +13,7 @@ Pre-requisites
 --------------
 
 - Android SDK v23
+- Java 8
 
 Getting Started
 ---------------
