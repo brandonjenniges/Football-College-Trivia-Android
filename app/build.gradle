@@ -7,8 +7,11 @@ buildscript {
         classpath 'io.fabric.tools:gradle:1.+'
     }
 }
+
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'jacoco-everywhere'
+apply plugin: 'me.tatarka.retrolambda'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -19,18 +22,33 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId "com.college.football.trivia"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 25
         versionName "3.3.1"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        androidTest {
+            setRoot('src/androidTest')
+        }
+        test {
+            setRoot('src/test')
+        }
     }
 
     buildTypes {
         release {
-
             minifyEnabled false
+            testCoverageEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
@@ -46,6 +64,7 @@ android {
 
         debug {
             debuggable true
+            testCoverageEnabled = true
             // disable crashlytics and google analytics
             buildConfigField "boolean", "USE_CRASHLYTICS", "false"
             ext.enableCrashlytics = false
@@ -114,12 +133,24 @@ android {
             }
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     // Google
-    compile 'com.android.support:appcompat-v7:23.2.0'
+    compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.google.android.gms:play-services-games:8.4.0'
 
     // Third Party
@@ -136,4 +167,18 @@ dependencies {
     //Unit testing
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.10.19'
+
+    //Instrumentation Testing
+    androidTestCompile 'com.android.support:support-annotations:23.2.1'
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.1') {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude module: 'recyclerview-v7'
+    }
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.1'
+    androidTestCompile 'com.android.support.test:runner:0.4.1'
+}
+
+configurations {
+    androidTestCompile.exclude group: 'com.android.support', module: 'support-v4'
 }
