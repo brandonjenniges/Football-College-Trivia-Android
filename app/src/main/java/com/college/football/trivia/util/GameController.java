@@ -10,7 +10,6 @@ public class GameController {
     private static GameController INSTANCE;
 
     private static int mod_dif_high;
-    private static int current_score;
     private static boolean wrong_answer;
     private static int start_streak;
     private static int best_streak;
@@ -19,7 +18,6 @@ public class GameController {
     private static int current_worst;
     private static boolean process_post_data;
     private static Player current_player;
-    private static boolean playing;
 
     private static ArrayList<College> tier1;
     private static ArrayList<College> tier2;
@@ -34,10 +32,6 @@ public class GameController {
         }
 
         return INSTANCE;
-    }
-
-    public static ArrayList<Player> getGamePlayers() {
-        return new QuestionLoader().easyQuestions();
     }
 
     public static ArrayList<College> getTier2() {
@@ -78,18 +72,6 @@ public class GameController {
 
     public void setCurrent_player(Player current_player) {
         GameController.current_player = current_player;
-    }
-
-    public int getCurrent_score() {
-        return current_score;
-    }
-
-    public void setCurrent_score(int current_score) {
-        GameController.current_score = current_score;
-    }
-
-    public void addCurrent_score() {
-        GameController.current_score++;
     }
 
     public boolean getWrong_answer() {
@@ -166,13 +148,5 @@ public class GameController {
 
     public void setProcess_postData(boolean process_post_data) {
         GameController.process_post_data = process_post_data;
-    }
-
-    public boolean isPlaying() {
-        return playing;
-    }
-
-    public void setPlaying(boolean playing) {
-        GameController.playing = playing;
     }
 }

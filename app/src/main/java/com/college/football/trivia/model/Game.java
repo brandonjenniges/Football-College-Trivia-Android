@@ -5,31 +5,15 @@ import android.os.Parcelable;
 
 public class Game implements Parcelable {
 
-    public static final Parcelable.Creator<Game> CREATOR = new Parcelable.Creator<Game>() {
-        @Override
-        public Game createFromParcel(Parcel source) {
-            return new Game(source);
-        }
-
-        @Override
-        public Game[] newArray(int size) {
-            return new Game[size];
-        }
-    };
     public static final String EXTRA_KEY = "GAME_EXTRA_KEY";
     private Mode mode;
     private Difficulty difficulty;
+    private int score;
 
     public Game(Mode mode, Difficulty difficulty) {
         this.mode = mode;
         this.difficulty = difficulty;
-    }
-
-    protected Game(Parcel in) {
-        int tmpMode = in.readInt();
-        this.mode = tmpMode == -1 ? null : Mode.values()[tmpMode];
-        int tmpDifficulty = in.readInt();
-        this.difficulty = tmpDifficulty == -1 ? null : Difficulty.values()[tmpDifficulty];
+        this.score = 0;
     }
 
     public Mode getMode() {
@@ -40,15 +24,20 @@ public class Game implements Parcelable {
         return difficulty;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public int getScore() {
+        return score;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.mode == null ? -1 : this.mode.ordinal());
-        dest.writeInt(this.difficulty == null ? -1 : this.difficulty.ordinal());
+    public void increaseScore() {
+        this.score++;
+    }
+
+    public void decreaseScore() {
+        this.score--;
+    }
+
+    public Game reset() {
+        return new Game(mode, difficulty);
     }
 
     public enum Mode {
@@ -104,4 +93,36 @@ public class Game implements Parcelable {
         int modeInt = Game.intForMode(mode);
         return prefix + (modeInt * 4) + difficultyInt;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.mode == null ? -1 : this.mode.ordinal());
+        dest.writeInt(this.difficulty == null ? -1 : this.difficulty.ordinal());
+        dest.writeInt(this.score);
+    }
+
+    protected Game(Parcel in) {
+        int tmpMode = in.readInt();
+        this.mode = tmpMode == -1 ? null : Mode.values()[tmpMode];
+        int tmpDifficulty = in.readInt();
+        this.difficulty = tmpDifficulty == -1 ? null : Difficulty.values()[tmpDifficulty];
+        this.score = in.readInt();
+    }
+
+    public static final Creator<Game> CREATOR = new Creator<Game>() {
+        @Override
+        public Game createFromParcel(Parcel source) {
+            return new Game(source);
+        }
+
+        @Override
+        public Game[] newArray(int size) {
+            return new Game[size];
+        }
+    };
 }

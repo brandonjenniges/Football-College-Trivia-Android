@@ -25,10 +25,8 @@ import com.google.android.gms.games.Games;
 
 
 public class ResultsActivity extends BaseActivity implements View.OnClickListener {
-    private TextView resultScore;
-
     protected GameController controller;
-
+    private TextView resultScore;
     private Game game;
 
     @Override
@@ -64,7 +62,7 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
             case R.id.action_rate:
                 this.startActivity(new Intent(Intent.ACTION_VIEW, Uri
                         .parse(Constants.app_url)));
-                return  true;
+                return true;
             case R.id.action_leaderboard:
                 if (BuildConfig.DEBUG || mGoogleApiClient.isConnected()) {
                     startActivity(new Intent(getApplicationContext(),
@@ -91,32 +89,27 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
     }
 
     public void processAchievements() {
+        int score = game.getScore();
 
-        if (controller.getCurrent_score() > 0) {
+        if (score > 0) {
             Games.Achievements.unlock(mGoogleApiClient, Constants.achievement_boom);
             Games.Achievements.increment(mGoogleApiClient,
-                            Constants.achievement_just_getting_started,
-                    controller.getCurrent_score());
+                    Constants.achievement_just_getting_started, score);
             Games.Achievements.increment(mGoogleApiClient,
-                            Constants.achievement_established_starter,
-                    controller.getCurrent_score());
+                    Constants.achievement_established_starter, score);
 
             Games.Achievements.increment(mGoogleApiClient,
-                            Constants.achievement_seasoned_pro,
-                    controller.getCurrent_score());
+                    Constants.achievement_seasoned_pro, score);
 
 
             Games.Achievements.increment(mGoogleApiClient,
-                    Constants.achievement_grizzly_veteran,
-                    controller.getCurrent_score());
+                    Constants.achievement_grizzly_veteran, score);
 
             Games.Achievements.increment(mGoogleApiClient,
-                    Constants.achievement_gridiron_legend,
-                    controller.getCurrent_score());
+                    Constants.achievement_gridiron_legend, score);
 
             Games.Achievements.increment(mGoogleApiClient,
-                            Constants.achievement_never_gonna_give_your_up,
-                    controller.getCurrent_score());
+                    Constants.achievement_never_gonna_give_your_up, score);
         }
 
         if (controller.getWrong_answer()) {
@@ -140,7 +133,7 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
         Game.Mode gameMode = game.getMode();
         if (gameMode == Game.Mode.Standard || gameMode == Game.Mode.Survival) {
             Games.Leaderboards.submitScore(mGoogleApiClient,
-                    Constants.leaderboards[Game.intForMode(gameMode)][Game.intForDifficulty(game.getDifficulty())], controller.getCurrent_score());
+                    Constants.leaderboards[Game.intForMode(gameMode)][Game.intForDifficulty(game.getDifficulty())], game.getScore());
         }
     }
 
@@ -164,23 +157,20 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
         } else {
             intent = new Intent(this, PracticeActivity.class);
         }
-        intent.putExtra(Game.EXTRA_KEY, game);
+        intent.putExtra(Game.EXTRA_KEY, game.reset());
         startActivity(intent);
         finish();
     }
 
     public void initializeView() {
-
         setContentView(R.layout.result_view);
-
-        controller.setPlaying(false);
 
         resultScore = (TextView) findViewById(R.id.result_score);
         Button playAgain = (Button) findViewById(R.id.playAgainButton);
 
         playAgain.setOnClickListener(this);
 
-        resultScore.setText("Score: " + controller.getCurrent_score());
+        resultScore.setText("Score: " + game.getScore());
 
     }
 
@@ -192,20 +182,20 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
             processLeaderboard();
         }
         controller.setProcess_postData(false);
-
     }
 
     public void saveLocalScore() {
-        resultScore.setText("Score: " + controller.getCurrent_score());
+        int score = game.getScore();
+        resultScore.setText("Score: " + score);
 
         String highScoreKey = game.getHighScoreKey();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         int bestScore = prefs.getInt(highScoreKey, 0);
 
 
-        if(controller.getCurrent_score() > bestScore){
+        if (score > bestScore) {
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt(highScoreKey, controller.getCurrent_score());
+            editor.putInt(highScoreKey, score);
             editor.commit();
         }
     }

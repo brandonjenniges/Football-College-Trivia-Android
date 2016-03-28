@@ -72,8 +72,6 @@ public class GamePresenter {
     public void initializeView() {
         buttons = view.getButtons();
 
-        controller.setPlaying(true);
-        controller.setCurrent_score(0);
         controller.setWrong_answer(false);
         controller.resetStart_streak();
         controller.resetCurrent_streak();
@@ -86,7 +84,7 @@ public class GamePresenter {
 
         controller.setMod_dif_high(bestScore);
 
-        view.setScoreText(String.valueOf(this.getController().getCurrent_score()));
+        view.setScoreText(String.valueOf(game.getScore()));
         view.setHighScoreText(String.valueOf(this.getController().getMod_dif_high()));
         view.setGameText("");
     }
@@ -123,8 +121,8 @@ public class GamePresenter {
                     .equals(controller.getCurrent_player().getCollege())) {
                 view.getGameTextView().setTextColor(view.getWrongGuessTextColor());
                 handledClick = true;
-                controller.setCurrent_score(controller.getCurrent_score() - 1);
-                view.setScoreText(String.valueOf(controller.getCurrent_score()));
+                game.decreaseScore();
+                view.setScoreText(String.valueOf(game.getScore()));
                 handleGuess(button);
                 view.getGameTextView().setTextColor(view.getQuestionTextColor());
             } else {
@@ -187,7 +185,7 @@ public class GamePresenter {
     }
 
     protected void correctAnswer() {
-        controller.addCurrent_score();
+        game.increaseScore();
         if (!controller.getWrong_answer()) {
             controller.incrementStart_streak();
         }
@@ -196,7 +194,7 @@ public class GamePresenter {
             controller.incrementBest_streak();
         }
         controller.resetCurrent_worst();
-        view.setScoreText(controller.getCurrent_score() + "");
+        view.setScoreText(String.valueOf(game.getScore()));
     }
 
     protected void wrongAnswer() {
