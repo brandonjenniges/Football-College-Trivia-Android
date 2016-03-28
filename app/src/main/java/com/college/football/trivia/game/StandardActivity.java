@@ -52,8 +52,8 @@ public class StandardActivity extends GameActivity {
                 gameText.setText(minutes + ":" + seconds);
             }
 
-            if(seconds < 10 && minutes == 0){
-                gameText.setTextColor(getResources().getColor(R.color.question_text_color));
+            if(seconds < 10 && minutes == 0) {
+                gameText.setTextColor(getQuestionTextColor());
             }
         }
     }

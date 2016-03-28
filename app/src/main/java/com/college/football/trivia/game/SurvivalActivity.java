@@ -9,7 +9,7 @@ public class SurvivalActivity extends GameActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        gameText.setTextColor(getResources().getColor(R.color.incorrect_guess_color));
+        gameText.setTextColor(getWrongGuessTextColor());
     }
 
     @Override

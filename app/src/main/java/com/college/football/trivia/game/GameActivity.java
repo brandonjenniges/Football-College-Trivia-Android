@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -24,24 +25,15 @@ public class GameActivity extends AppCompatActivity implements GameView {
 
     protected Toolbar toolbar;
     protected GamePresenter presenter;
-    @Bind(R.id.playerText)
-    TextView playerText;
-    @Bind(R.id.teamText)
-    TextView teamText;
-    @Bind(R.id.currentScoreText)
-    TextView scoreText;
-    @Bind(R.id.gameValueText)
-    TextView gameText;
-    @Bind(R.id.highScoreText)
-    TextView highScoreText;
-    @Bind(R.id.choice1)
-    Button choice1;
-    @Bind(R.id.choice2)
-    Button choice2;
-    @Bind(R.id.choice3)
-    Button choice3;
-    @Bind(R.id.choice4)
-    Button choice4;
+    @Bind(R.id.playerText) TextView playerText;
+    @Bind(R.id.teamText) TextView teamText;
+    @Bind(R.id.currentScoreText) TextView scoreText;
+    @Bind(R.id.gameValueText) TextView gameText;
+    @Bind(R.id.highScoreText) TextView highScoreText;
+    @Bind(R.id.choice1) Button choice1;
+    @Bind(R.id.choice2) Button choice2;
+    @Bind(R.id.choice3) Button choice3;
+    @Bind(R.id.choice4) Button choice4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +49,6 @@ public class GameActivity extends AppCompatActivity implements GameView {
     @Override
     protected void onStart() {
         super.onStart();
-
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -136,22 +127,22 @@ public class GameActivity extends AppCompatActivity implements GameView {
 
     @Override
     public int getWrongGuessTextColor() {
-        return getResources().getColor(R.color.incorrect_guess_color);
+        return ContextCompat.getColor(this, R.color.incorrect_guess_color);
     }
 
     @Override
     public int getCorrectGuessTextColor() {
-        return getResources().getColor(R.color.correct_guess_color);
+        return ContextCompat.getColor(this, R.color.correct_guess_color);
     }
 
     @Override
     public int getRegularTextColor() {
-        return getResources().getColor(R.color.dark_text_color);
+        return ContextCompat.getColor(this, R.color.dark_text_color);
     }
 
     @Override
     public int getQuestionTextColor() {
-        return getResources().getColor(R.color.question_text_color);
+        return ContextCompat.getColor(this, R.color.question_text_color);
     }
 
     @Override
