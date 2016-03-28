@@ -8,14 +8,6 @@ public class Constants {
     public static final String PLAYERS_JSON_FILE = "all_players.txt";
     public static final String COLLEGE_JSON_FILE = "all_colleges.txt";
 
-    // Game Modes
-    public static final String[] modes = {"Standard", "Survival", "Practice"};
-
-    // Game Difficulty
-    public static final int easiest_game_int = 1;
-    public static final int normal_game_int = 2;
-    public static final int hard_game_int = 3;
-    public static final int hardest_game_int = 4;
     public static final String[] diffs = {"Rookie", "Starter", "Veteran",
             "All-Pro"};
 
