@@ -117,11 +117,7 @@ public class GameActivity extends AppCompatActivity implements GameView {
 
     @Override
     public void setQuestionText(Player player) {
-        playerText.setText(player.getFirst_name() + " "
-                        + player.getLast_name() + " "
-                        + player.getPosition() + " #"
-                        + player.getJersey_num()
-        );
+        playerText.setText(getString(R.string.question_string, player.getFirst_name(), player.getLast_name(), player.getPosition(), player.getJersey_num()));
         teamText.setText(player.getTeam());
     }
 
