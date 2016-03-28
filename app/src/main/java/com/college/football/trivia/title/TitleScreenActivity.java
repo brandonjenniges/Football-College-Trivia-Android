@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class TitleScreenActivity extends BaseActivity implements TitleScreenView {
-    private com.college.football.trivia.Title.TitleScreenPresenter presenter;
+    private TitleScreenPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,6 @@ public class TitleScreenActivity extends BaseActivity implements TitleScreenView
                 }
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

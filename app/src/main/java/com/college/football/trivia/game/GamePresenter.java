@@ -36,6 +36,7 @@ public class GamePresenter {
     private boolean freePause = true;
 
     private Game game;
+    private Player player;
 
     public GamePresenter(GameView view, Game game) {
         this.view = view;
@@ -71,13 +72,7 @@ public class GamePresenter {
     public void initializeView() {
         buttons = view.getButtons();
 
-        controller.setWrong_answer(false);
-        controller.resetStart_streak();
-        controller.resetCurrent_streak();
-        controller.resetCurrent_worst();
-        controller.resetBest_streak();
-        controller.resetWorst_streak();
-        controller.setProcess_postData(true);
+        GameController.reset();
 
         view.setScoreText(String.valueOf(game.getScore()));
         view.setHighScoreText(String.valueOf(game.getHighScore()));
@@ -109,7 +104,7 @@ public class GamePresenter {
     private void handleStandardGuess(final Button button) {
         if (!handledClick) {
             if (!button.getText().toString()
-                    .equals(controller.getCurrent_player().getCollege())) {
+                    .equals(player.getCollege())) {
                 view.getGameTextView().setTextColor(view.getWrongGuessTextColor());
                 handledClick = true;
                 game.decreaseScore();
@@ -125,7 +120,7 @@ public class GamePresenter {
 
     private void handleSurvivalGuess(final Button button) {
         if (!button.getText().toString()
-                .equals(controller.getCurrent_player().getCollege())) {
+                .equals(player.getCollege())) {
             updateStrikes();
         }
         checkGuess(button);
@@ -133,7 +128,7 @@ public class GamePresenter {
 
     private void handleGuess(final Button button) {
         if (button.getText().toString()
-                .equals(controller.getCurrent_player().getCollege())) {
+                .equals(player.getCollege())) {
             correctAnswer();
             YoYo.with(Techniques.Pulse).duration(400).playOn(button);
             button.setTextColor(view.getCorrectGuessTextColor());
@@ -177,24 +172,24 @@ public class GamePresenter {
 
     protected void correctAnswer() {
         game.increaseScore();
-        if (!controller.getWrong_answer()) {
-            controller.incrementStart_streak();
+        if (!controller.hadWrongAnswer()) {
+            controller.increaseStartStreak();
         }
-        controller.incrementCurrent_streak();
-        if (controller.getCurrent_streak() > controller.getBest_streak()) {
-            controller.incrementBest_streak();
+        controller.increaseCurrentStreak();
+        if (controller.getCurrentStreak() > controller.getBestStreak()) {
+            controller.increaseBestStreak();
         }
-        controller.resetCurrent_worst();
+        controller.resetCurrentWorstStreak();
         view.setScoreText(String.valueOf(game.getScore()));
     }
 
     protected void wrongAnswer() {
-        controller.setWrong_answer(true);
-        controller.resetCurrent_streak();
-        controller.incrementCurrent_worst();
+        controller.setHadWrongAnswer(true);
+        controller.resetCurrentStreak();
+        controller.increaseCurrentWorstStreak();
 
-        if (controller.getCurrent_worst() > controller.getWorst_streak()) {
-            controller.incrementWorst_streak();
+        if (controller.getCurrentWrongStreak() > controller.getLongestWrongStreak()) {
+            controller.increaseLongestWrongStreak();
         }
     }
 
@@ -216,10 +211,10 @@ public class GamePresenter {
         }
 
         int l = r.nextInt(choices.size());
-        controller.setCurrent_player(questions[choices.get(l)]);
+        player = questions[choices.get(l)];
         choices.remove(l);
 
-        view.setQuestionText(controller.getCurrent_player());
+        view.setQuestionText(player);
         getAnswers();
         sortAnswers();
         displayAnswers();
@@ -230,17 +225,16 @@ public class GamePresenter {
         for (int i = 0; i < sortedChoices.length; i++) {
             sortedChoices[i] = "";
         }
-        sortedChoices[0] = controller.getCurrent_player().getCollege();
+        sortedChoices[0] = player.getCollege();
         String college;
         int temp;
 
         for (int i = 1; i <= 3; i++) {
             do {
-                temp = r.nextInt(tierArray.get(
-                        controller.getCurrent_player().getCollege_tier() - 1)
+                temp = r.nextInt(tierArray.get(player.getCollege_tier() - 1)
                         .size());
                 college = tierArray
-                        .get(controller.getCurrent_player().getCollege_tier() - 1)
+                        .get(player.getCollege_tier() - 1)
                         .get(temp).getName();
             }
             while (sortedChoices[0].equals(college) || sortedChoices[1].equals(college) || sortedChoices[2].equals(college) || sortedChoices[3].equals(college));
@@ -256,7 +250,7 @@ public class GamePresenter {
     public void displayAnswers() {
         int i = 0;
         for (String answer : sortedChoices) {
-            if (answer.equals(controller.getCurrent_player().getCollege())) {
+            if (answer.equals(player.getCollege())) {
                 correctButton = buttons[i];
             }
             buttons[i].setText(answer);

@@ -1,7 +1,6 @@
 package com.college.football.trivia.Util;
 
 import com.college.football.trivia.Model.College;
-import com.college.football.trivia.Model.Player;
 
 import java.util.ArrayList;
 
@@ -9,27 +8,23 @@ public class GameController {
 
     private static GameController INSTANCE;
 
-    private static boolean wrong_answer;
-    private static int start_streak;
-    private static int best_streak;
-    private static int worst_streak;
-    private static int current_streak;
-    private static int current_worst;
-    private static boolean process_post_data;
-    private static Player current_player;
+    private static boolean hadWrongAnswer; // Achievement for getting your first wrong guess
+    private static int startStreak; // Achievement that tracks getting so many correct at start of game
+    private static int currentStreak; // Tracker for bestStreak
+    private static int bestStreak; // Achievement for so many correct in a row
+    private static int currentWrongStreak; // Tracker for longestWrongStreak
+    private static int longestWrongStreak;  // Achievement for so many wrong in a row
 
     private static ArrayList<College> tier1;
     private static ArrayList<College> tier2;
     private static ArrayList<College> tier3;
 
-    private GameController() {
-    }
+    private GameController() {}
 
     public static GameController getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new GameController();
         }
-
         return INSTANCE;
     }
 
@@ -57,87 +52,68 @@ public class GameController {
         GameController.tier3 = tier3;
     }
 
-    public Player getCurrent_player() {
-        return current_player;
+    public static void reset() {
+        hadWrongAnswer = false;
+        startStreak = 0;
+        currentStreak = 0;
+        bestStreak = 0;
+        currentWrongStreak = 0;
+        longestWrongStreak = 0;
     }
 
-    public void setCurrent_player(Player current_player) {
-        GameController.current_player = current_player;
+    public boolean hadWrongAnswer() {
+        return hadWrongAnswer;
     }
 
-    public boolean getWrong_answer() {
-        return wrong_answer;
+    public void setHadWrongAnswer(Boolean b) {
+        GameController.hadWrongAnswer = b;
     }
 
-    public void setWrong_answer(Boolean b) {
-        GameController.wrong_answer = b;
+    public int getStartStreak() {
+        return startStreak;
     }
 
-    public void resetStart_streak() {
-        GameController.start_streak = 0;
+    public void increaseStartStreak() {
+        GameController.startStreak++;
     }
 
-    public int getStart_streak() {
-        return start_streak;
+    public int getBestStreak() {
+        return bestStreak;
     }
 
-    public void incrementStart_streak() {
-        GameController.start_streak++;
+    public void increaseBestStreak() {
+        GameController.bestStreak++;
     }
 
-    public void resetBest_streak() {
-        GameController.best_streak = 0;
+    public int getLongestWrongStreak() {
+        return longestWrongStreak;
     }
 
-    public int getBest_streak() {
-        return best_streak;
+    public void increaseLongestWrongStreak() {
+        GameController.longestWrongStreak++;
     }
 
-    public void incrementBest_streak() {
-        GameController.best_streak++;
+    public int getCurrentStreak() {
+        return currentStreak;
     }
 
-    public void resetWorst_streak() {
-        GameController.worst_streak = 0;
+    public void increaseCurrentStreak() {
+        GameController.currentStreak++;
     }
 
-    public int getWorst_streak() {
-        return worst_streak;
+    public int getCurrentWrongStreak() {
+        return currentWrongStreak;
     }
 
-    public void incrementWorst_streak() {
-        GameController.worst_streak++;
+    public void resetCurrentWorstStreak() {
+        GameController.currentWrongStreak = 0;
     }
 
-    public int getCurrent_streak() {
-        return current_streak;
+    public void increaseCurrentWorstStreak() {
+        GameController.currentWrongStreak++;
     }
 
-    public void resetCurrent_streak() {
-        GameController.current_streak = 0;
-    }
-
-    public void incrementCurrent_streak() {
-        GameController.current_streak++;
-    }
-
-    public int getCurrent_worst() {
-        return current_worst;
-    }
-
-    public void resetCurrent_worst() {
-        GameController.current_worst = 0;
-    }
-
-    public void incrementCurrent_worst() {
-        GameController.current_worst++;
-    }
-
-    public boolean getProcess_postData() {
-        return GameController.process_post_data;
-    }
-
-    public void setProcess_postData(boolean process_post_data) {
-        GameController.process_post_data = process_post_data;
+    public void resetCurrentStreak() {
+        GameController.currentStreak = 0;
     }
 }

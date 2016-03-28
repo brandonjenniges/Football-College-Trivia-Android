@@ -29,6 +29,7 @@ public class ResultsActivity extends BaseActivity {
     protected GameController controller;
     @Bind (R.id.result_score) TextView resultScore;
     private Game game;
+    private boolean postedGMSData = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class ResultsActivity extends BaseActivity {
             if (mGoogleApiClient.isConnected()) {
                 processAchievements();
                 processLeaderBoard();
+                postedGMSData = true;
             }
         }
     }
@@ -104,19 +106,19 @@ public class ResultsActivity extends BaseActivity {
             Games.Achievements.increment(mGoogleApiClient, Constants.achievement_never_gonna_give_your_up, score);
         }
 
-        if (controller.getWrong_answer()) {
+        if (controller.hadWrongAnswer()) {
             Games.Achievements.unlock(mGoogleApiClient, Constants.achievement_oops);
         }
 
-        if (controller.getBest_streak() >= 3) {
+        if (controller.getBestStreak() >= 3) {
             Games.Achievements.unlock(mGoogleApiClient, Constants.achievement_tictactoe);
         }
 
-        if (controller.getWorst_streak() >= 3) {
+        if (controller.getLongestWrongStreak() >= 3) {
             Games.Achievements.unlock(mGoogleApiClient, Constants.achievement_tictacouch);
         }
 
-        if (controller.getStart_streak() >= 10) {
+        if (controller.getStartStreak() >= 10) {
             Games.Achievements.unlock(mGoogleApiClient, Constants.achievement_jumping_the_snap_count);
         }
     }
@@ -154,11 +156,11 @@ public class ResultsActivity extends BaseActivity {
     @Override
     public void onConnected(Bundle bundle) {
         super.onConnected(bundle);
-        if (controller.getProcess_postData()) {
+        if (!postedGMSData) {
             processAchievements();
             processLeaderBoard();
+            postedGMSData = true;
         }
-        controller.setProcess_postData(false);
     }
 
     public void saveLocalScore() {
