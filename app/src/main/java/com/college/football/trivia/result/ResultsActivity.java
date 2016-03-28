@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.college.football.trivia.BaseActivity;
 import com.college.football.trivia.BuildConfig;
 import com.college.football.trivia.LeaderboardActivity;
+import com.college.football.trivia.Model.Game;
 import com.college.football.trivia.R;
 import com.college.football.trivia.Game.PracticeActivity;
 import com.college.football.trivia.Game.StandardActivity;
@@ -28,12 +29,14 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
 
     protected GameController controller;
 
+    private Game game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
+        game = getIntent().getParcelableExtra(Game.EXTRA_KEY);
         controller = GameController.getInstance();
         initializeView();
 
@@ -139,11 +142,10 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
     }
 
     public void processLeaderboard() {
-        if (controller.getCurrent_mode() > 0
-                && controller.getCurrent_mode() < 3) {
+        Game.Mode gameMode = game.getMode();
+        if (gameMode == Game.Mode.Standard || gameMode == Game.Mode.Survival) {
             Games.Leaderboards.submitScore(mGoogleApiClient,
-                                    Constants.leaderboards[controller.getCurrent_mode() - 1][controller.getCurrent_diff() - 1], controller.getCurrent_score());
-
+                    Constants.leaderboards[Game.intForMode(gameMode)][Game.intForDifficulty(game.getDifficulty())], controller.getCurrent_score());
         }
     }
 
@@ -151,29 +153,24 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.playAgainButton:
-                startGame(controller.getCurrent_mode());
+                startGame();
                 finish();
                 break;
         }
     }
 
-    /**
-     * Starts Game based on mode stored in GameController
-     *
-     * @param i
-     *            Game mode referenced in Constants.java
-     */
-    private void startGame(int i) {
-        if (i == 1) {
-            Intent intent = new Intent(this, StandardActivity.class);
-            startActivity(intent);
-        } else if (i == 2) {
-            Intent intent = new Intent(this, SurvivalActivity.class);
+    private void startGame() {
+        Intent intent;
+        if (game.getMode() == Game.Mode.Standard) {
+            intent = new Intent(this, StandardActivity.class);
+        } else if (game.getMode() == Game.Mode.Survival) {
+            intent = new Intent(this, SurvivalActivity.class);
             startActivity(intent);
         } else {
-            Intent intent = new Intent(this, PracticeActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, PracticeActivity.class);
         }
+        intent.putExtra(Game.EXTRA_KEY, game);
+        startActivity(intent);
         finish();
     }
 
@@ -206,17 +203,14 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
     public void saveLocalScore() {
         resultScore.setText("Score: " + controller.getCurrent_score());
 
+        String highScoreKey = game.getHighScoreKey();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        int bestScore = prefs.getInt("FootballScore" + ((controller
-                .getCurrent_mode() - 1) * 4)
-                + controller.getCurrent_diff(),0);
+        int bestScore = prefs.getInt(highScoreKey, 0);
 
 
         if(controller.getCurrent_score() > bestScore){
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("FootballScore" + ((controller
-                    .getCurrent_mode() - 1) * 4)
-                    + controller.getCurrent_diff(), controller.getCurrent_score());
+            editor.putInt(highScoreKey, controller.getCurrent_score());
             editor.commit();
         }
     }

@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.college.football.trivia.Model.Game;
 import com.college.football.trivia.Model.Player;
 import com.college.football.trivia.R;
 import com.college.football.trivia.Result.ResultsActivity;
@@ -22,26 +23,34 @@ import butterknife.OnClick;
 public class GameActivity extends AppCompatActivity implements GameView {
 
     protected Toolbar toolbar;
-
-    @Bind(R.id.playerText) TextView playerText;
-    @Bind(R.id.teamText) TextView teamText;
-    @Bind(R.id.currentScoreText) TextView scoreText;
-    @Bind(R.id.gameValueText) TextView gameText;
-    @Bind(R.id.highScoreText) TextView highScoreText;
-
-    @Bind(R.id.choice1) Button choice1;
-    @Bind(R.id.choice2) Button choice2;
-    @Bind(R.id.choice3) Button choice3;
-    @Bind(R.id.choice4) Button choice4;
-
     protected GamePresenter presenter;
+    @Bind(R.id.playerText)
+    TextView playerText;
+    @Bind(R.id.teamText)
+    TextView teamText;
+    @Bind(R.id.currentScoreText)
+    TextView scoreText;
+    @Bind(R.id.gameValueText)
+    TextView gameText;
+    @Bind(R.id.highScoreText)
+    TextView highScoreText;
+    @Bind(R.id.choice1)
+    Button choice1;
+    @Bind(R.id.choice2)
+    Button choice2;
+    @Bind(R.id.choice3)
+    Button choice3;
+    @Bind(R.id.choice4)
+    Button choice4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game);
         ButterKnife.bind(this);
-        presenter = new GamePresenter(this);
+
+        Game game = getIntent().getParcelableExtra(Game.EXTRA_KEY);
+        presenter = new GamePresenter(this, game);
         presenter.setup();
     }
 
@@ -55,7 +64,7 @@ public class GameActivity extends AppCompatActivity implements GameView {
     }
 
     @Override
-      public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_game_screen, menu);
         return true;
     }
@@ -63,19 +72,16 @@ public class GameActivity extends AppCompatActivity implements GameView {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         switch (id) {
             case R.id.action_menu:
                 finish();
-                return  true;
+                return true;
             case R.id.action_quit:
                 endGame();
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
 
     @SuppressWarnings("unused")
     @OnClick({R.id.choice1, R.id.choice2, R.id.choice3, R.id.choice4})
@@ -83,29 +89,24 @@ public class GameActivity extends AppCompatActivity implements GameView {
         presenter.guessMade(button);
     }
 
-    /**
-     * Game is over, end game and go to Results screen
-     */
     @Override
     public void endGame() {
-        Intent i = new Intent(this, ResultsActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
+        Intent intent = new Intent(this, ResultsActivity.class);
+        intent.putExtra(Game.EXTRA_KEY, presenter.getGame());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
         finish();
     }
 
     @Override
     public Button[] getButtons() {
-        return new Button[] { choice1, choice2, choice3, choice4 };
+        return new Button[]{choice1, choice2, choice3, choice4};
     }
 
     @Override
     public int getHighScore() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        int bestScore = prefs.getInt("FootballScore" + ((presenter.getController()
-                .getCurrent_mode() - 1) * 4)
-                + presenter.getController().getCurrent_diff(), 0);
-        return bestScore;
+        return prefs.getInt(presenter.getGame().getHighScoreKey(), 0);
     }
 
     @Override

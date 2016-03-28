@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Button;
 
 import com.college.football.trivia.Model.College;
+import com.college.football.trivia.Model.Game;
 import com.college.football.trivia.Model.Player;
 import com.college.football.trivia.Util.Constants;
 import com.college.football.trivia.Util.GameController;
@@ -36,8 +37,11 @@ public class GamePresenter {
     private int strikes = 0;
     private boolean freePause = true;
 
-    public GamePresenter(GameView view) {
+    private Game game;
+
+    public GamePresenter(GameView view, Game game) {
         this.view = view;
+        this.game = game;
     }
 
     public void setup() {
@@ -105,9 +109,9 @@ public class GamePresenter {
      * v - button clicked on guess attempt made
      */
     public void guessMade(final Button button) {
-        if (getController().getCurrent_mode() == Constants.survival_game_int) {
+        if (game.getMode() == Game.Mode.Survival) {
             handleSurvivalGuess(button);
-        } else if (getController().getCurrent_mode() == Constants.standard_game_int) {
+        } else if (game.getMode() == Game.Mode.Standard) {
             handleStandardGuess(button);
         } else {
             handleGuess(button);
@@ -216,7 +220,7 @@ public class GamePresenter {
      * Get a list of all the questions for game mode
      */
     public void getQuestions() {
-        questions = Player.getPlayers(GameController.getInstance().getCurrent_diff());
+        questions = Player.getPlayers(game.getDifficulty());
 
         Log.d("QUESTION Count", "" + questions.length);
     }
@@ -287,5 +291,9 @@ public class GamePresenter {
         }
 
         handledClick = false;
+    }
+
+    public Game getGame() {
+        return game;
     }
 }

@@ -9,8 +9,6 @@ public class GameController {
 
     private static GameController INSTANCE;
 
-    private static int current_mode;
-    private static int current_diff;
     private static int mod_dif_high;
     private static int current_score;
     private static boolean wrong_answer;
@@ -64,22 +62,6 @@ public class GameController {
 
     public static void setTier3(ArrayList<College> tier3) {
         GameController.tier3 = tier3;
-    }
-
-    public int getCurrent_mode() {
-        return current_mode;
-    }
-
-    public void setCurrent_mode(int current_mode) {
-        GameController.current_mode = current_mode;
-    }
-
-    public int getCurrent_diff() {
-        return current_diff;
-    }
-
-    public void setCurrent_diff(int current_diff) {
-        GameController.current_diff = current_diff;
     }
 
     public int getMod_dif_high() {

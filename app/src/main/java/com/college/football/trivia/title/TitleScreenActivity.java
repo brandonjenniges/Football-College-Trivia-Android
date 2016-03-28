@@ -15,6 +15,7 @@ import com.college.football.trivia.Game.PracticeActivity;
 import com.college.football.trivia.Game.StandardActivity;
 import com.college.football.trivia.Game.SurvivalActivity;
 import com.college.football.trivia.LeaderboardActivity;
+import com.college.football.trivia.Model.Game;
 import com.college.football.trivia.R;
 import com.college.football.trivia.Util.Constants;
 import com.google.android.gms.games.Games;
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class TitleScreenActivity extends BaseActivity implements TitleScreenView {
-    private TitleScreenPresenter presenter;
+    private com.college.football.trivia.Title.TitleScreenPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +63,6 @@ public class TitleScreenActivity extends BaseActivity implements TitleScreenView
                     mGoogleApiClient.connect();
                 }
                 return true;
-            /*
-            case R.id.action_about:
-                Toast.makeText(getApplicationContext(), "About", Toast.LENGTH_SHORT).show();
-                return true;
-                */
         }
 
         return super.onOptionsItemSelected(item);
@@ -80,32 +76,33 @@ public class TitleScreenActivity extends BaseActivity implements TitleScreenView
     }
 
     @Override
-    public void showDifficultyDialog() {
+    public void showDifficultyDialog(final Game.Mode mode) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Difficulty");
         builder.setItems(Constants.diffs,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        presenter.getController().setCurrent_diff(which + 1);
-
+                        Game game = new Game(mode, Game.difficultyFromInt(which));
                         Intent intent;
 
-                        switch (presenter.getController().getCurrent_mode()) {
-                            case Constants.standard_game_int:
+                        switch (game.getMode()) {
+                            case Standard:
                                 intent = new Intent(getApplicationContext(),
                                         StandardActivity.class);
                                 break;
-                            case Constants.survival_game_int:
+                            case Survival:
                                 intent = new Intent(getApplicationContext(),
                                         SurvivalActivity.class);
                                 break;
-                            case Constants.practice_game_int:
+                            case Practice:
                             default:
                                 intent = new Intent(getApplicationContext(),
                                         PracticeActivity.class);
                                 break;
                         }
 
+
+                        intent.putExtra(Game.EXTRA_KEY, game);
                         startActivity(intent);
                     }
                 }

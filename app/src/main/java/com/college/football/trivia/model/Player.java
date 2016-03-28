@@ -152,12 +152,12 @@ public class Player {
                 + college_tier + "]";
     }
 
-    public static Player[] getPlayers(int current_diff) {
-        if (current_diff == Constants.easiest_game_int) {
+    public static Player[] getPlayers(Game.Difficulty difficulty) {
+        if (difficulty == Game.Difficulty.Rookie) {
             return Player.getRookiePlayers();
-        } else if (current_diff == Constants.normal_game_int) {
+        } else if (difficulty == Game.Difficulty.Starter) {
             return Player.getStarterPlayers();
-        } else if (current_diff == Constants.hard_game_int) {
+        } else if (difficulty == Game.Difficulty.Veteran) {
             return Player.getVeteranPlayers();
         } else {
             return Player.getAllPlayers();

@@ -9,9 +9,6 @@ public class Constants {
     public static final String COLLEGE_JSON_FILE = "all_colleges.txt";
 
     // Game Modes
-    public static final int standard_game_int = 1;
-    public static final int survival_game_int = 2;
-    public static final int practice_game_int = 3;
     public static final String[] modes = {"Standard", "Survival", "Practice"};
 
     // Game Difficulty
