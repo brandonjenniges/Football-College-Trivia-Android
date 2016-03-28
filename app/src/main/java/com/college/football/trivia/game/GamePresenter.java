@@ -154,7 +154,7 @@ public class GamePresenter {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    button.setTextColor(view.getCorrectGuessTextColor());
+                    button.setTextColor(view.getRegularTextColor());
                     setQuestion();
 
                 }
@@ -171,7 +171,7 @@ public class GamePresenter {
                 @Override
                 public void run() {
                     button.setTextColor(view.getRegularTextColor());
-                    correctButton.setTextColor(view.getCorrectGuessTextColor());
+                    correctButton.setTextColor(view.getRegularTextColor());
                     setQuestion();
 
                 }
