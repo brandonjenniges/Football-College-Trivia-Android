@@ -30,13 +30,12 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
         game = getIntent().getParcelableExtra(Game.EXTRA_KEY);
         controller = GameController.getInstance();
-        initializeView();
 
+        initializeView();
         saveLocalScore();
 
         if (!BuildConfig.DEBUG) {
@@ -169,7 +168,7 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
 
         playAgain.setOnClickListener(this);
 
-        resultScore.setText("Score: " + game.getScore());
+        resultScore.setText(getString(R.string.scoreDisplay, game.getScore()));
 
     }
 
@@ -185,7 +184,6 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
 
     public void saveLocalScore() {
         int score = game.getScore();
-        resultScore.setText("Score: " + score);
         if (score > game.getHighScore()) {
             game.setHighScore(score);
             ScoreManager.saveHighScore(game, this);

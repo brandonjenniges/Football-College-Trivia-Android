@@ -78,7 +78,7 @@ public class TitleScreenActivity extends BaseActivity implements TitleScreenView
     @Override
     public void showDifficultyDialog(final Game.Mode mode) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Difficulty");
+        builder.setTitle(R.string.difficulty);
         builder.setItems(Constants.diffs,
                 (dialog, which) -> {
                     Game.Difficulty difficulty = Game.difficultyFromInt(which);
