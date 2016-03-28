@@ -151,13 +151,10 @@ public class GamePresenter {
 
 
             final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    button.setTextColor(view.getRegularTextColor());
-                    setQuestion();
+            handler.postDelayed(() -> {
+                button.setTextColor(view.getRegularTextColor());
+                setQuestion();
 
-                }
             }, 400);
 
         } else {
@@ -167,14 +164,11 @@ public class GamePresenter {
             button.setTextColor(view.getWrongGuessTextColor());
             correctButton.setTextColor(view.getCorrectGuessTextColor());
             final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    button.setTextColor(view.getRegularTextColor());
-                    correctButton.setTextColor(view.getRegularTextColor());
-                    setQuestion();
+            handler.postDelayed(() -> {
+                button.setTextColor(view.getRegularTextColor());
+                correctButton.setTextColor(view.getRegularTextColor());
+                setQuestion();
 
-                }
             }, 1000);
         }
     }
@@ -215,13 +209,8 @@ public class GamePresenter {
         }
     }
 
-    /**
-     * Get a list of all the questions for game mode
-     */
     public void getQuestions() {
         questions = Player.getPlayers(game.getDifficulty());
-
-        Log.d("QUESTION Count", "" + questions.length);
     }
 
     public void fillChoices() {
@@ -230,9 +219,6 @@ public class GamePresenter {
         }
     }
 
-    /**
-     * Sets question to view
-     */
     public void setQuestion() {
         canGuess = true;
 
@@ -244,7 +230,6 @@ public class GamePresenter {
         controller.setCurrent_player(questions[choices.get(l)]);
         choices.remove(l);
 
-        Log.d("TAG", choices.size() + ", " + l);
         view.setQuestionText(controller.getCurrent_player());
         getAnswers();
         sortAnswers();

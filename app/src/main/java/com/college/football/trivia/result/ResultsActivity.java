@@ -85,11 +85,6 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
                     mGoogleApiClient.connect();
                 }
                 return true;
-            /*
-            case R.id.action_about:
-                Toast.makeText(getApplicationContext(), "About", Toast.LENGTH_SHORT).show();
-                return true;
-                */
         }
 
         return super.onOptionsItemSelected(item);

@@ -6,11 +6,9 @@ import com.college.football.trivia.Util.GameController;
 
 public class TitleScreenPresenter {
     private TitleScreenView view;
-    private GameController controller;
 
     public TitleScreenPresenter(TitleScreenView view ) {
         this.view = view;
-        controller = GameController.getInstance();
     }
 
     public void startGame(int id) {
@@ -25,9 +23,5 @@ public class TitleScreenPresenter {
                 view.showDifficultyDialog(Game.Mode.Practice);
                 break;
         }
-    }
-
-    public GameController getController() {
-        return controller;
     }
 }

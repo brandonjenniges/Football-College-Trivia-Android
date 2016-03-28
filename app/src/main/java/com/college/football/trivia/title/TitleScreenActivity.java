@@ -80,31 +80,27 @@ public class TitleScreenActivity extends BaseActivity implements TitleScreenView
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Difficulty");
         builder.setItems(Constants.diffs,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Game game = new Game(mode, Game.difficultyFromInt(which));
-                        Intent intent;
+                (dialog, which) -> {
+                    Game game = new Game(mode, Game.difficultyFromInt(which));
+                    Intent intent;
 
-                        switch (game.getMode()) {
-                            case Standard:
-                                intent = new Intent(getApplicationContext(),
-                                        StandardActivity.class);
-                                break;
-                            case Survival:
-                                intent = new Intent(getApplicationContext(),
-                                        SurvivalActivity.class);
-                                break;
-                            case Practice:
-                            default:
-                                intent = new Intent(getApplicationContext(),
-                                        PracticeActivity.class);
-                                break;
-                        }
-
-
-                        intent.putExtra(Game.EXTRA_KEY, game);
-                        startActivity(intent);
+                    switch (game.getMode()) {
+                        case Standard:
+                            intent = new Intent(getApplicationContext(),
+                                    StandardActivity.class);
+                            break;
+                        case Survival:
+                            intent = new Intent(getApplicationContext(),
+                                    SurvivalActivity.class);
+                            break;
+                        case Practice:
+                        default:
+                            intent = new Intent(getApplicationContext(),
+                                    PracticeActivity.class);
+                            break;
                     }
+                    intent.putExtra(Game.EXTRA_KEY, game);
+                    startActivity(intent);
                 }
         );
         builder.show();

@@ -80,24 +80,12 @@ public class Player {
         return first_name;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
     public String getLast_name() {
         return last_name;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
     public String getTeam() {
         return team;
-    }
-
-    public void setTeam(String team) {
-        this.team = team;
     }
 
     public String getCollege() {
@@ -112,35 +100,17 @@ public class Player {
         return position;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
     public int getJersey_num() {
         return jersey_num;
-    }
-
-    public void setJersey_num(int jersey_num) {
-        this.jersey_num = jersey_num;
     }
 
     public int getCollege_tier() {
         return college_tier;
     }
 
-    public void setCollege_tier(int college_tier) {
-        this.college_tier = college_tier;
-    }
-
     public int getOverall() {
         return overall;
     }
-
-    public void setOverall(int overall) {
-        this.overall = overall;
-    }
-
-
 
     @Override
     public String toString() {

@@ -23,7 +23,6 @@ import butterknife.OnClick;
 
 public class GameActivity extends AppCompatActivity implements GameView {
 
-    protected Toolbar toolbar;
     protected GamePresenter presenter;
     @Bind(R.id.playerText) TextView playerText;
     @Bind(R.id.teamText) TextView teamText;
@@ -34,6 +33,7 @@ public class GameActivity extends AppCompatActivity implements GameView {
     @Bind(R.id.choice2) Button choice2;
     @Bind(R.id.choice3) Button choice3;
     @Bind(R.id.choice4) Button choice4;
+    @Bind(R.id.app_bar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,6 @@ public class GameActivity extends AppCompatActivity implements GameView {
     @Override
     protected void onStart() {
         super.onStart();
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
     }
